@@ -1,0 +1,150 @@
+apply plugin: 'com.android.application'
+
+// Test - take screenshot, output tests...
+// https://github.com/square/spoon
+apply plugin: 'spoon'
+
+// Check dependencies.
+// https://github.com/ben-manes/gradle-versions-plugin
+apply plugin: 'com.github.ben-manes.versions'
+
+apply from: '../config/dependency/dependencies.gradle'
+apply from: '../config/quality/quality.gradle'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24"
+
+    defaultConfig {
+        applicationId "com.mercandalli.android.apps.test"
+        minSdkVersion 10
+        targetSdkVersion 24
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //testInstrumentationRunner "com.mercandalli.android.apps.pong.TestJUnitRunner"
+        jackOptions {
+            enabled true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+        debug {
+            versionNameSuffix ".dev"
+        }
+    }
+
+    sourceSets {
+        main {
+            // Split resources.
+            // https://medium.com/google-developer-experts/android-project-structure-alternative-way-29ce766682f0#.sjnhetuhb
+            res.srcDirs = [
+                    'src/main/res/common',
+                    'src/main/res/launcher'
+            ]
+        }
+
+        // Everything related to connected test live in src/androidTest/core/java
+        androidTest.java.srcDir 'src/androidTest/core/java'
+
+        // Instrumented unit tests live in src/androidTest/unit
+        androidTest.java.srcDir 'src/androidTest/unit/java'
+
+        // Instrumented integration tests live in src/androidTest/integration
+        androidTest.java.srcDir 'src/androidTest/integration/java'
+
+        // Instrumented use cases tests live in src/androidTest/usecases
+        androidTest.java.srcDir 'src/androidTest/usecases/java'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+// Test - take screenshot, output tests...
+// https://github.com/square/spoon
+spoon {
+    // Enable debug output
+    debug = true
+
+    // Disable gif
+    noAnimations = true
+
+    // Set custom test reports directory (defaults to "spoon")
+    baseOutputDir = file("$buildDir/spoon-custom-report-dir")
+
+    // Enable setting test class/method-to-be-run from command line. E.g.:
+    // $> ../gradlew spoonFreeDebugTest -PspoonClassName=com.stanfy.spoon.example.test.MainActivityTest -PspoonMethodName=testSetText
+    if (project.hasProperty('spoonClassName')) {
+        className = project.spoonClassName
+
+        if (project.hasProperty('spoonMethodName')) {
+            methodName = project.spoonMethodName
+        }
+    }
+
+    // You can pass instrumentation arguments. Tests in this example assert this pair is passed.
+    instrumentationArgs = ["foo=bar"]
+
+    // It's also possible to configure tests sharding using convenient properties:
+    // numShards = 2
+    // shardIndex = 0
+    adbTimeout = 30
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile 'com.android.support:multidex:1.0.1'
+
+    compile 'com.android.support:support-annotations:24.0.0'
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:design:24.0.0'
+    compile 'com.android.support:cardview-v7:24.0.0'
+    compile 'com.android.support:recyclerview-v7:24.0.0'
+
+    compile 'com.google.android.gms:play-services-wearable:9.2.0'
+    compile 'com.google.android.gms:play-services-analytics:9.2.0'
+    compile 'com.google.firebase:firebase-core:9.0.2'
+
+    compile rootProject.ext.dependencies.base
+
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.7@aar') {
+        transitive = true;
+    }
+
+    // Testing-only dependencies
+    androidTestCompile 'com.android.support:support-annotations:24.0.0'
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test:rules:0.5'
+    // Test - take screenshot, output tests...
+    // https://github.com/square/spoon
+    androidTestCompile 'com.squareup.spoon:spoon-client:1.5.7'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
+    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2.2') {
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude module: 'recyclerview-v7'
+    }
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
+
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:1.10.19'
+}
+
+apply plugin: 'com.google.gms.google-services'

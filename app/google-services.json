@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "33987297118",
+    "project_id": "test-629b"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:33987297118:android:4329edf39c3c079d",
+        "android_client_info": {
+          "package_name": "com.mercandalli.android.apps.test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCx-c31S1Gg9yXjoOA-UAYfTJu4HSdyuhg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="launcher_button_bg">@android:color/white</color>
+    <color name="launcher_button_bg_pressed">#e4e4e4</color>
+    <color name="launcher_button_bg_disabled">#cdcdcd</color>
+
+    <color name="launcher_button_bluetooth_enable">#b5b5b5</color>
+    <color name="launcher_button_bluetooth_disable">#ffffff</color>
+</resources>
