@@ -259,6 +259,20 @@ public class UiAutomatorLib {
     /**
      * Check if the object exists and click on it (wait new windows).
      *
+     * @param containsText The text displayed.
+     * @return The clickAndWaitForNewWindow result.
+     * @throws UiObjectNotFoundException Throw an exception if not found.
+     */
+    public static boolean clickWaitNewWindowContainsText(
+            final String... containsText) throws UiObjectNotFoundException {
+        final UiObject uiObject = findObjectContainsText(containsText);
+        Assert.assertTrue(uiObject.exists());
+        return uiObject.clickAndWaitForNewWindow(5_500);
+    }
+
+    /**
+     * Check if the object exists and click on it (wait new windows).
+     *
      * @param containsTextId The text displayed.
      * @return The clickAndWaitForNewWindow result.
      * @throws UiObjectNotFoundException Throw an exception if not found.
