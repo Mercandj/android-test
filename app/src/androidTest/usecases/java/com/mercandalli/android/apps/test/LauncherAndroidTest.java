@@ -86,24 +86,43 @@ public final class LauncherAndroidTest {
         //Go to store
         UiAutomatorLib.clickWaitNewWindowContainsText("Store");
         UiAutomatorLib.click("com.edjing.edjingdjturntable:id/price");
-        UiAutomatorLib.sleep(5_500);
-        UiAutomatorLib.pressBack();
-
-        //Go to principal UI
-        UiAutomatorLib.pressBack();
+        quitEdjingStore();
 
         //Go to library
         UiAutomatorLib.click("com.edjing.edjingdjturntable:id/platine_menu_bottom_play_button_deckA");
         UiAutomatorLib.findObjectContainsText("Titres", "Titles").click();
+        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
+        quitEdjingStore();
+        findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list").swipeUp(100);
+        findObjectById("com.edjing.edjingdjturntable:id/row_track_library").swipeDown(100);
         UiAutomatorLib.findObjectContainsText("Artistes", "Artists").click();
+        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
+        quitEdjingStore();
+        findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list").swipeUp(100);
+        findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll").swipeDown(100);
         UiAutomatorLib.clickWaitNewWindowContainsText("Albums");
+        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
+        quitEdjingStore();
+        findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list").swipeUp(100);
+        findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll").swipeDown(100);
         UiAutomatorLib.clickWaitNewWindowContainsText("Playlists");
+        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
+        quitEdjingStore();
+        findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list").swipeUp(100);
+        findObjectById("ccom.edjing.edjingdjturntable:id/list_fast_scroll").swipeDown(100);
         UiAutomatorLib.findObjectContainsText("Mes Mixes", "My Mixes").click();
+        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
+        quitEdjingStore();
+        findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list").swipeUp(100);
+        findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll").swipeDown(100);
+
+
+
 
         //UiAutomatorLib.findObjectContainsText("News", "Actualités", "actu").click();
 
 
-        //findObjectContainsText("android.widget.LinearLayout").swipeUp(100);
+        //findObjectContainsText("com.edjing.edjingdjturntable:id/list_fast_scroll_list").swipeUp(100);
 
 
     }
