@@ -93,17 +93,19 @@ public final class LauncherAndroidTest {
         UiAutomatorLib.pressBack();
 
         //Go to library
-        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/platine_menu_bottom_play_button_deckA")
-        UiAutomatorLib.clickWaitNewWindowContainsText("Titres" || "Titles");
-        UiAutomatorLib.clickWaitNewWindowContainsText("Artistes" || "Artists");
+        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/platine_menu_bottom_play_button_deckA");
+        UiAutomatorLib.findObjectContainsText("Titres", "Titles").click();
+        UiAutomatorLib.findObjectContainsText("Artistes", "Artists").click();
         UiAutomatorLib.clickWaitNewWindowContainsText("Albums");
         UiAutomatorLib.clickWaitNewWindowContainsText("Playlists");
-        UiAutomatorLib.clickWaitNewWindowContainsText("Mes Mixes" || "My Mixes");
+        UiAutomatorLib.findObjectContainsText("Mes Mixes", "My Mixes").click();
 
-        //         UiAutomatorLib.findObjectContainsText("News", "Actualités", "actu").click();
+        //UiAutomatorLib.findObjectContainsText("News", "Actualités", "actu").click();
 
 
         //findObjectContainsText("android.widget.LinearLayout").swipeUp(100);
+
+
     }
 
     private void quitEdjingStore() {
