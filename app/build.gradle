@@ -22,7 +22,7 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        //testInstrumentationRunner "com.mercandalli.android.apps.pong.TestJUnitRunner"
+        //testInstrumentationRunner "com.mercandalli.android.apps.test.TestJUnitRunner"
         jackOptions {
             enabled true
         }

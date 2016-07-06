@@ -94,14 +94,13 @@ public final class LauncherAndroidTest {
 
         //Go to library
         UiAutomatorLib.click("com.edjing.edjingdjturntable:id/platine_menu_bottom_play_button_deckA")
-        UiAutomatorLib.clickWaitNewWindowContainsText("Titres"||"Titles");
-        UiAutomatorLib.clickWaitNewWindowContainsText("Artistes"||"Artists");
+        UiAutomatorLib.clickWaitNewWindowContainsText("Titres" || "Titles");
+        UiAutomatorLib.clickWaitNewWindowContainsText("Artistes" || "Artists");
         UiAutomatorLib.clickWaitNewWindowContainsText("Albums");
         UiAutomatorLib.clickWaitNewWindowContainsText("Playlists");
-        UiAutomatorLib.clickWaitNewWindowContainsText("Mes Mixes"||"My Mixes");
+        UiAutomatorLib.clickWaitNewWindowContainsText("Mes Mixes" || "My Mixes");
 
-
-
+        //         UiAutomatorLib.findObjectContainsText("News", "Actualités", "actu").click();
 
 
         //findObjectContainsText("android.widget.LinearLayout").swipeUp(100);
@@ -115,4 +114,6 @@ public final class LauncherAndroidTest {
         UiAutomatorLib.sleep(2_500);
         UiAutomatorLib.pressBack();
     }
+
+
 }
