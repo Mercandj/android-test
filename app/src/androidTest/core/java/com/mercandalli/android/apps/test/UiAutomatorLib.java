@@ -330,6 +330,15 @@ public class UiAutomatorLib {
         final int childCount = list.getChildCount();
         final int startX = device.getDisplayWidth() / 2;
         for (int i = 0; i < (childCount / 4) + 1; i++) {
+            device.drag(startX, device.getDisplayHeight() - 40, startX, 40, 100);
+        }
+    }
+
+    public static void dragTopList(final UiObject list) throws UiObjectNotFoundException {
+        final UiDevice device = getDevice();
+        final int childCount = list.getChildCount();
+        final int startX = device.getDisplayWidth() / 2;
+        for (int i = 0; i < (childCount / 4) + 1; i++) {
             device.drag(startX, 40, startX, device.getDisplayHeight() - 40, 100);
         }
     }
