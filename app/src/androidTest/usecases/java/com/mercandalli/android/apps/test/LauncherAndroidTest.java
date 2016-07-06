@@ -135,6 +135,4 @@ public final class LauncherAndroidTest {
         UiAutomatorLib.sleep(2_500);
         UiAutomatorLib.pressBack();
     }
-
-
 }
