@@ -15,6 +15,9 @@ import org.junit.runner.RunWith;
 
 import static com.mercandalli.android.apps.test.TestApp.resetApp;
 import static com.mercandalli.android.apps.test.UiAutomatorLib.click;
+import static com.mercandalli.android.apps.test.UiAutomatorLib.clickWaitNewWindowContainsText;
+import static com.mercandalli.android.apps.test.UiAutomatorLib.findObjectById;
+import static com.mercandalli.android.apps.test.UiAutomatorLib.findObjectContainsText;
 import static com.mercandalli.android.apps.test.UiAutomatorLib.getDevice;
 import static com.mercandalli.android.apps.test.UiAutomatorLib.sleep;
 import static com.mercandalli.android.apps.test.UiAutomatorLib.takeScreenShotSpoon;
@@ -39,19 +42,77 @@ public final class LauncherAndroidTest {
 
     @Test
     public void testPlaySimpleGame() throws UiObjectNotFoundException {
-        getDevice();
-        sleep(500);
+        UiAutomatorLib.getDevice();
+        UiAutomatorLib.sleep(500);
 
-        takeScreenShotSpoon("launcher");
+        UiAutomatorLib.takeScreenShotSpoon("launcher");
 
-        click(R.id.launcher_activity_main_button);
+        UiAutomatorLib.click(R.id.launcher_activity_main_button);
 
-        sleep(1_500);
+        UiAutomatorLib.sleep(1_500);
 
         UiAutomatorLib.pressHome();
 
-        click("com.mercandalli.android.apps.launcher:id/activity_main_app_button");
+        //UiAutomatorLib.click("com.ape.launcher:id/app_icon_title");
+        UiAutomatorLib.clickWaitNewWindowContainsText("edjing");
+        //Waiting for ads display
+        UiAutomatorLib.sleep(5_500);
+        //Go back to principal UI
+        UiAutomatorLib.pressBack();
 
+        if (UiAutomatorLib.findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?").exists()) {
+            UiAutomatorLib.click("android:id/button2");
+        }
+
+        //Go to settings
+        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/platine_menu_top_settings");
+
+        //Go to skins
+        UiAutomatorLib.clickWaitNewWindowContainsText("skins");
+        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/btn_skin_2");
+        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/btn_select_skin");
+        quitEdjingStore();
+        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/btn_skin_4");
+        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/btn_select_skin");
+        quitEdjingStore();
+        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/btn_skin_5");
+        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/btn_select_skin");
+        quitEdjingStore();
+        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/btn_skin_6");
+        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/btn_select_skin");
+        quitEdjingStore();
+        UiAutomatorLib.pressBack();
+
+        //Go to store
+        UiAutomatorLib.clickWaitNewWindowContainsText("Store");
+        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/price");
+        UiAutomatorLib.sleep(5_500);
+        UiAutomatorLib.pressBack();
+
+        //Go to principal UI
+        UiAutomatorLib.pressBack();
+
+        //Go to library
+        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/platine_menu_bottom_play_button_deckA")
+        UiAutomatorLib.clickWaitNewWindowContainsText("Titres"||"Titles");
+        UiAutomatorLib.clickWaitNewWindowContainsText("Artistes"||"Artists");
+        UiAutomatorLib.clickWaitNewWindowContainsText("Albums");
+        UiAutomatorLib.clickWaitNewWindowContainsText("Playlists");
+        UiAutomatorLib.clickWaitNewWindowContainsText("Mes Mixes"||"My Mixes");
+
+
+
+
+
+        //findObjectContainsText("android.widget.LinearLayout").swipeUp(100);
+    }
+
+    private void quitEdjingStore() {
+        UiAutomatorLib.sleep(5_500);
+        UiAutomatorLib.pressBack();
+        UiAutomatorLib.sleep(4_500);
+        UiAutomatorLib.pressBack();
+        UiAutomatorLib.sleep(2_500);
         UiAutomatorLib.pressBack();
     }
 }
