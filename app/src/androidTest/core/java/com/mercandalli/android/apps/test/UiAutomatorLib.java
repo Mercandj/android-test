@@ -8,7 +8,6 @@ import android.os.RemoteException;
 import android.os.SystemClock;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.core.deps.guava.collect.Iterables;
@@ -129,15 +128,18 @@ public class UiAutomatorLib {
      * @param texts A {@link List} of texts.
      * @return The {@link UiObject}.
      */
-    @Nullable
+    @NonNull
     public static UiObject findObjectContainsText(final String... texts) {
+        if (texts.length == 0) {
+            throw new IllegalStateException("List empty");
+        }
         for (final String text : texts) {
             final UiObject objectContainsText = findObjectContainsText(text);
             if (objectContainsText.exists()) {
                 return objectContainsText;
             }
         }
-        return findObjectContainsText(texts);
+        return findObjectContainsText(texts[0]);
     }
 
     /**
@@ -147,15 +149,18 @@ public class UiAutomatorLib {
      * @param texts A {@link List} of texts.
      * @return The {@link UiObject}.
      */
-    @Nullable
+    @NonNull
     public static UiObject findObjectContainsText(final List<String> texts) {
+        if (texts.isEmpty()) {
+            throw new IllegalStateException("List empty");
+        }
         for (final String text : texts) {
             final UiObject objectContainsText = findObjectContainsText(text);
             if (objectContainsText.exists()) {
                 return objectContainsText;
             }
         }
-        return null;
+        return findObjectContainsText(texts.get(0));
     }
 
     /**
