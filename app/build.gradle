@@ -23,9 +23,6 @@ android {
         versionName rootProject.ext.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //testInstrumentationRunner "com.mercandalli.android.apps.test.TestJUnitRunner"
-        jackOptions {
-            enabled true
-        }
     }
 
     buildTypes {
@@ -60,11 +57,6 @@ android {
 
         // Instrumented use cases tests live in src/androidTest/usecases
         androidTest.java.srcDir 'src/androidTest/usecases/java'
-    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
