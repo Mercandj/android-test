@@ -16,9 +16,12 @@ import org.junit.runner.RunWith;
 import static com.mercandalli.android.apps.test.TestApp.resetApp;
 import static com.mercandalli.android.apps.test.UiAutomatorLib.click;
 import static com.mercandalli.android.apps.test.UiAutomatorLib.clickWaitNewWindowContainsText;
+import static com.mercandalli.android.apps.test.UiAutomatorLib.dragBottomList;
 import static com.mercandalli.android.apps.test.UiAutomatorLib.findObjectById;
 import static com.mercandalli.android.apps.test.UiAutomatorLib.findObjectContainsText;
 import static com.mercandalli.android.apps.test.UiAutomatorLib.getDevice;
+import static com.mercandalli.android.apps.test.UiAutomatorLib.pressBack;
+import static com.mercandalli.android.apps.test.UiAutomatorLib.pressHome;
 import static com.mercandalli.android.apps.test.UiAutomatorLib.sleep;
 import static com.mercandalli.android.apps.test.UiAutomatorLib.takeScreenShotSpoon;
 
@@ -42,84 +45,85 @@ public final class LauncherAndroidTest {
 
     @Test
     public void testPlaySimpleGame() throws UiObjectNotFoundException {
-        UiAutomatorLib.getDevice();
-        UiAutomatorLib.sleep(500);
+        getDevice();
+        sleep(500);
 
-        UiAutomatorLib.takeScreenShotSpoon("launcher");
 
-        UiAutomatorLib.click(R.id.launcher_activity_main_button);
+        takeScreenShotSpoon("launcher");
 
-        UiAutomatorLib.sleep(1_500);
+        click(R.id.launcher_activity_main_button);
 
-        UiAutomatorLib.pressHome();
+        sleep(1_500);
 
-        //UiAutomatorLib.click("com.ape.launcher:id/app_icon_title");
-        UiAutomatorLib.clickWaitNewWindowContainsText("edjing");
+        pressHome();
+
+        //click("com.ape.launcher:id/app_icon_title");
+        clickWaitNewWindowContainsText("edjing");
         //Waiting for ads display
-        UiAutomatorLib.sleep(5_500);
+        sleep(5_500);
         //Go back to principal UI
-        UiAutomatorLib.pressBack();
+        pressBack();
 
-        if (UiAutomatorLib.findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?").exists()) {
-            UiAutomatorLib.click("android:id/button2");
+        if (findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?").exists()) {
+            click("android:id/button2");
         }
 
         //Go to settings
-        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/platine_menu_top_settings");
+        click("com.edjing.edjingdjturntable:id/platine_menu_top_settings");
 
         //Go to skins
-        UiAutomatorLib.clickWaitNewWindowContainsText("skins");
-        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/btn_skin_2");
-        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/btn_select_skin");
+        clickWaitNewWindowContainsText("skins");
+        click("com.edjing.edjingdjturntable:id/btn_skin_2");
+        click("com.edjing.edjingdjturntable:id/btn_select_skin");
         quitEdjingStore();
-        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/btn_skin_4");
-        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/btn_select_skin");
+        click("com.edjing.edjingdjturntable:id/btn_skin_4");
+        click("com.edjing.edjingdjturntable:id/btn_select_skin");
         quitEdjingStore();
-        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/btn_skin_5");
-        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/btn_select_skin");
+        click("com.edjing.edjingdjturntable:id/btn_skin_5");
+        click("com.edjing.edjingdjturntable:id/btn_select_skin");
         quitEdjingStore();
-        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/btn_skin_6");
-        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/btn_select_skin");
+        click("com.edjing.edjingdjturntable:id/btn_skin_6");
+        click("com.edjing.edjingdjturntable:id/btn_select_skin");
         quitEdjingStore();
-        UiAutomatorLib.pressBack();
+        pressBack();
 
         //Go to store
-        UiAutomatorLib.clickWaitNewWindowContainsText("Store");
-        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/price");
+        clickWaitNewWindowContainsText("Store");
+        click("com.edjing.edjingdjturntable:id/price");
         quitEdjingStore();
 
         //Go to library
-        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/platine_menu_bottom_play_button_deckA");
-        UiAutomatorLib.findObjectContainsText("Titres", "Titles").click();
-        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
+        click("com.edjing.edjingdjturntable:id/platine_menu_bottom_play_button_deckA");
+        findObjectContainsText("Titres", "Titles").click();
+        click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
         quitEdjingStore();
         findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list").swipeUp(100);
         findObjectById("com.edjing.edjingdjturntable:id/row_track_library").swipeDown(100);
-        UiAutomatorLib.findObjectContainsText("Artistes", "Artists").click();
-        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
+        findObjectContainsText("Artistes", "Artists").click();
+        click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
         quitEdjingStore();
         findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list").swipeUp(100);
         findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll").swipeDown(100);
-        UiAutomatorLib.clickWaitNewWindowContainsText("Albums");
-        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
+        clickWaitNewWindowContainsText("Albums");
+        click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
         quitEdjingStore();
         findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list").swipeUp(100);
         findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll").swipeDown(100);
-        UiAutomatorLib.clickWaitNewWindowContainsText("Playlists");
-        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
+        clickWaitNewWindowContainsText("Playlists");
+        click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
         quitEdjingStore();
         findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list").swipeUp(100);
         findObjectById("ccom.edjing.edjingdjturntable:id/list_fast_scroll").swipeDown(100);
-        UiAutomatorLib.findObjectContainsText("Mes Mixes", "My Mixes").click();
-        UiAutomatorLib.click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
+        findObjectContainsText("Mes Mixes", "My Mixes").click();
+        click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
         quitEdjingStore();
         findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list").swipeUp(100);
         findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll").swipeDown(100);
 
 
+        dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
 
-
-        //UiAutomatorLib.findObjectContainsText("News", "Actualités", "actu").click();
+        //findObjectContainsText("News", "Actualités", "actu").click();
 
 
         //findObjectContainsText("com.edjing.edjingdjturntable:id/list_fast_scroll_list").swipeUp(100);
@@ -128,11 +132,11 @@ public final class LauncherAndroidTest {
     }
 
     private void quitEdjingStore() {
-        UiAutomatorLib.sleep(5_500);
-        UiAutomatorLib.pressBack();
-        UiAutomatorLib.sleep(4_500);
-        UiAutomatorLib.pressBack();
-        UiAutomatorLib.sleep(2_500);
-        UiAutomatorLib.pressBack();
+        sleep(5_500);
+        pressBack();
+        sleep(4_500);
+        pressBack();
+        sleep(2_500);
+        pressBack();
     }
 }
