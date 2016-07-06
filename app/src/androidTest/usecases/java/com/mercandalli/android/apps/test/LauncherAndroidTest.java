@@ -52,6 +52,10 @@ public final class LauncherAndroidTest {
 
         click("com.mercandalli.android.apps.launcher:id/activity_main_app_button");
 
+        UiAutomatorLib.findObjectContainsText("News", "Actualités", "actu");
+
         UiAutomatorLib.pressBack();
     }
+
+
 }

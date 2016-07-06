@@ -8,6 +8,7 @@ import android.os.RemoteException;
 import android.os.SystemClock;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.core.deps.guava.collect.Iterables;
@@ -26,6 +27,7 @@ import junit.framework.Assert;
 import java.io.File;
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
@@ -34,7 +36,7 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 /**
  * An abstract test that launch the app and provide useful test methods.
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class UiAutomatorLib {
 
     /**
@@ -113,11 +115,47 @@ public class UiAutomatorLib {
      * Find an {@link UiObject} with a specific {@link String} displayed.
      *
      * @param text A text displayed.
-     * @return The UiObject.
+     * @return The {@link UiObject}.
      */
     @NonNull
     public static UiObject findObjectContainsText(final String text) {
         return getDevice().findObject(new UiSelector().textContains(text));
+    }
+
+    /**
+     * Find an {@link UiObject} with a specific {@link String} displayed. For each {@link String}
+     * of the {@link List} given, this method returns the first {@link UiObject} textContains.
+     *
+     * @param texts A {@link List} of texts.
+     * @return The {@link UiObject}.
+     */
+    @Nullable
+    public static UiObject findObjectContainsText(final String... texts) {
+        for (final String text : texts) {
+            final UiObject objectContainsText = findObjectContainsText(text);
+            if (objectContainsText.exists()) {
+                return objectContainsText;
+            }
+        }
+        return findObjectContainsText(texts);
+    }
+
+    /**
+     * Find an {@link UiObject} with a specific {@link String} displayed. For each {@link String}
+     * of the {@link List} given, this method returns the first {@link UiObject} textContains.
+     *
+     * @param texts A {@link List} of texts.
+     * @return The {@link UiObject}.
+     */
+    @Nullable
+    public static UiObject findObjectContainsText(final List<String> texts) {
+        for (final String text : texts) {
+            final UiObject objectContainsText = findObjectContainsText(text);
+            if (objectContainsText.exists()) {
+                return objectContainsText;
+            }
+        }
+        return null;
     }
 
     /**
