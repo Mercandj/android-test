@@ -325,6 +325,15 @@ public class UiAutomatorLib {
     }
     //endregion - setText
 
+    public static void dragBottomList(final UiObject list) throws UiObjectNotFoundException {
+        final UiDevice device = getDevice();
+        final int childCount = list.getChildCount();
+        final int startX = device.getDisplayWidth() / 2;
+        for (int i = 0; i < (childCount / 4) + 1; i++) {
+            device.drag(startX, 40, startX, device.getDisplayHeight() - 40, 100);
+        }
+    }
+
     //region - assert
     public static void assertExists(@IdRes final int id) throws UiObjectNotFoundException {
         Assert.assertTrue(isObjectClickable(id));

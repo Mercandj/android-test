@@ -56,6 +56,4 @@ public final class LauncherAndroidTest {
 
         UiAutomatorLib.pressBack();
     }
-
-
 }
