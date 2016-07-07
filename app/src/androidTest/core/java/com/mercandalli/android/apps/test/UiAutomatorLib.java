@@ -329,8 +329,8 @@ public class UiAutomatorLib {
         final UiDevice device = getDevice();
         final int childCount = list.getChildCount();
         final int startX = device.getDisplayWidth() / 2;
-        for (int i = 0; i < (childCount / 4) + 1; i++) {
-            device.drag(startX, device.getDisplayHeight() - 40, startX, 40, 100);
+        for (int i = 0; i < (childCount)+1; i++) {
+            device.drag(startX, device.getDisplayHeight() - 40, startX, 40, 170);
         }
     }
 
