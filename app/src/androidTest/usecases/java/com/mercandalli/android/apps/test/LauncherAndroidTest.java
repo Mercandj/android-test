@@ -44,7 +44,7 @@ public final class LauncherAndroidTest {
             };
 
     @Test
-    public void testPlaySimpleGame() throws UiObjectNotFoundException {
+    public void testEdjingFreeStore() throws UiObjectNotFoundException {
         getDevice();
         sleep(500);
 
@@ -67,6 +67,12 @@ public final class LauncherAndroidTest {
         if (findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?").exists()) {
             click("android:id/button2");
         }
+
+        //Click on FX
+        click("com.edjing.edjingdjturntable:id/platine_menu_bottom_fx_button_deckA");
+        dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/fx_sliding_panel"));
+        sleep(1_500);
+        click("com.edjing.edjingdjturntable:id/platine_menu_bottom_fx_button_deckA");
 
         //Go to settings
         click("com.edjing.edjingdjturntable:id/platine_menu_top_settings");
@@ -92,36 +98,49 @@ public final class LauncherAndroidTest {
         click("com.edjing.edjingdjturntable:id/price");
         quitEdjingStore();
 
+        //Waiting for ads display
+        sleep(5_500);
+        //Go back to principal UI
+        pressBack();
+
+        if (findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?").exists()) {
+            click("android:id/button2");
+        }
+
+        //Click on "no ads"
+        click("com.edjing.edjingdjturntable:id/platine_no_ads_btn");
+        quitEdjingStore();
+
+        //Click on Pre Cueing
+        pressBack();
+        pressBack();
+
         //Go to library
         click("com.edjing.edjingdjturntable:id/platine_menu_bottom_play_button_deckA");
         findObjectContainsText("Titres", "Titles").click();
         click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
         quitEdjingStore();
-        findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list").swipeUp(100);
-        findObjectById("com.edjing.edjingdjturntable:id/row_track_library").swipeDown(100);
+        dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
+        click("com.edjing.edjingdjturntable:id/row_track_library_cover");
         findObjectContainsText("Artistes", "Artists").click();
         click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
         quitEdjingStore();
-        findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list").swipeUp(100);
-        findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll").swipeDown(100);
+        dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
         clickWaitNewWindowContainsText("Albums");
         click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
         quitEdjingStore();
-        findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list").swipeUp(100);
-        findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll").swipeDown(100);
+        dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
         clickWaitNewWindowContainsText("Playlists");
         click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
         quitEdjingStore();
-        findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list").swipeUp(100);
-        findObjectById("ccom.edjing.edjingdjturntable:id/list_fast_scroll").swipeDown(100);
+        dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
         findObjectContainsText("Mes Mixes", "My Mixes").click();
         click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
         quitEdjingStore();
-        findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list").swipeUp(100);
-        findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll").swipeDown(100);
-
-
         dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
+
+
+        //dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
 
         //findObjectContainsText("News", "Actualités", "actu").click();
 
@@ -133,10 +152,13 @@ public final class LauncherAndroidTest {
 
     private void quitEdjingStore() {
         sleep(5_500);
-        pressBack();
-        sleep(4_500);
+        if (findObjectContainsText("CONTINUER", "CONTINUE", "OK").exists()) {
+            pressBack();
+            sleep(4_500);
+        }
         pressBack();
         sleep(2_500);
         pressBack();
     }
+
 }
