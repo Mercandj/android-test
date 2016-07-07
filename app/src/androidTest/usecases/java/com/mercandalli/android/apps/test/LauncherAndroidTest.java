@@ -48,13 +48,6 @@ public final class LauncherAndroidTest {
         getDevice();
         sleep(500);
 
-
-        takeScreenShotSpoon("launcher");
-
-        click(R.id.launcher_activity_main_button);
-
-        sleep(1_500);
-
         pressHome();
 
         //click("com.ape.launcher:id/app_icon_title");
@@ -97,7 +90,17 @@ public final class LauncherAndroidTest {
         clickWaitNewWindowContainsText("Store");
         click("com.edjing.edjingdjturntable:id/price");
         quitEdjingStore();
+    }
 
+    @Test
+    public void testEdjingFreeNoAds() throws UiObjectNotFoundException {
+        getDevice();
+        sleep(500);
+
+        pressHome();
+
+        //click("com.ape.launcher:id/app_icon_title");
+        clickWaitNewWindowContainsText("edjing");
         //Waiting for ads display
         sleep(5_500);
         //Go back to principal UI
