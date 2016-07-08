@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.test;
+package com.mercandalli.android.apps.test.app.material;
 
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
@@ -8,7 +8,9 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 
+import com.mercandalli.android.apps.test.R;
 import com.mercandalli.android.apps.test.launcher.LauncherActivity;
+import com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,7 +28,7 @@ import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.cli
 @LargeTest
 @Suppress
 @RunWith(AndroidJUnit4.class)
-public final class SampleAndroidTest {
+public final class MaterialAndroidTest {
 
     /**
      * Has to be public.
@@ -53,20 +55,14 @@ public final class SampleAndroidTest {
 
         sleep(500);
 
-        takeScreenShotSpoon("main_actions");
-
-        click(R.id.launcher_activity_main_button);
-
-        sleep(1_500);
-
         pressHome();
+
+        // Material is a launcher
 
         click("com.mercandalli.android.apps.launcher:id/activity_main_app_button");
 
         clickContainsText("Actualité", "News", "Actu");
 
         pressBack();
-
-        System.out.println("showMainActions succeeded.");
     }
 }
