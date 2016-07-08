@@ -21,7 +21,7 @@ import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.Until;
 
-import com.mercandalli.android.apps.test.app.AppEnum;
+import com.mercandalli.android.apps.test.app.AppSupported;
 import com.mercandalli.android.apps.test.generic.GenericConfig;
 import com.squareup.spoon.Spoon;
 
@@ -271,8 +271,8 @@ public class UiAutomator {
         sleep(800);
     }
 
-    public static void openApp(@NonNull final AppEnum appEnum) {
-        openApp(appEnum.packageName);
+    public static void openApp(@NonNull final AppSupported appSupported) {
+        openApp(appSupported.packageName);
     }
 
     public static void openApp(@NonNull final String packageName) {

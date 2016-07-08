@@ -16,6 +16,8 @@ import android.support.test.uiautomator.UiSelector;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ListView;
 
+import com.mercandalli.android.apps.test.app.AppSupported;
+
 import java.util.Locale;
 
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
@@ -30,11 +32,16 @@ public final class UiAutomatorSettings {
         context.startActivity(intent);
     }
 
+    public static boolean openAppSetting(@NonNull final AppSupported appSupported) {
+        return openAppSetting(appSupported.packageName);
+    }
+
     public static boolean openAppSetting(@NonNull final String packageName) {
         try {
             //Open the specific App Info page:
-            Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            final Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
             intent.setData(Uri.parse("package:" + packageName));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             InstrumentationRegistry.getInstrumentation().getContext().startActivity(intent);
         } catch (ActivityNotFoundException ignored) {
             return false;

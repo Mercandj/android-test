@@ -5,14 +5,13 @@ import android.support.test.filters.Suppress;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 
-import com.mercandalli.android.apps.test.app.AppEnum;
+import com.mercandalli.android.apps.test.app.AppSupported;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.openApp;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.sleep;
 
 @LargeTest
 @Suppress
@@ -27,9 +26,6 @@ public final class GmailAndroidTest {
         // in order to use this method.
 
         getDevice();
-
-        sleep(500);
-
-        openApp(AppEnum.GMAIL);
+        openApp(AppSupported.GMAIL);
     }
 }

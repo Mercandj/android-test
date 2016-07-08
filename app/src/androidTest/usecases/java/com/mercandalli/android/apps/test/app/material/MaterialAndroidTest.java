@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.pressBack;
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.pressHome;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.sleep;
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.click;
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.clickContainsText;
 
@@ -28,8 +27,6 @@ public final class MaterialAndroidTest {
         // in order to use this method.
 
         getDevice();
-
-        sleep(500);
 
         // Go Home: Material is a launcher
         pressHome();

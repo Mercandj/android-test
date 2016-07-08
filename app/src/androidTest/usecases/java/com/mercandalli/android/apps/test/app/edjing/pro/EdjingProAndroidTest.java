@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.test.app.youtube;
+package com.mercandalli.android.apps.test.app.edjing.pro;
 
 import android.support.test.filters.LargeTest;
 import android.support.test.filters.Suppress;
@@ -16,16 +16,16 @@ import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.openApp;
 @LargeTest
 @Suppress
 @RunWith(AndroidJUnit4.class)
-public final class YoutubeAndroidTest {
+public final class EdjingProAndroidTest {
 
     @Test
-    public void testYoutube() throws UiObjectNotFoundException {
+    public void testEdjingFreeAds() throws UiObjectNotFoundException {
 
         // /!\ /!\ /!\
         // Remove the @Suppress annotation of this class
         // in order to use this method.
 
         getDevice();
-        openApp(AppSupported.YOUTUBE);
+        openApp(AppSupported.EDJING_PRO);
     }
 }

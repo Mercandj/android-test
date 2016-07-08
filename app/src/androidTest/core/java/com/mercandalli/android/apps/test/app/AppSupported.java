@@ -1,6 +1,6 @@
 package com.mercandalli.android.apps.test.app;
 
-public enum AppEnum {
+public enum AppSupported {
 
     // Google
     YOUTUBE("youtube", "com.google.android.youtube"),
@@ -13,12 +13,13 @@ public enum AppEnum {
 
     // Djit
     EDJING_FREE("edjing_free", "com.edjing.edjingdjturntable"),
+    EDJING_PRO("edjing_pro", "com.djit.apps.edjing.expert"),
     STREAM("stream", "com.djit.apps.stream");
 
     public final String name;
     public final String packageName;
 
-    AppEnum(String name, String packageName) {
+    AppSupported(String name, String packageName) {
         this.name = name;
         this.packageName = packageName;
     }

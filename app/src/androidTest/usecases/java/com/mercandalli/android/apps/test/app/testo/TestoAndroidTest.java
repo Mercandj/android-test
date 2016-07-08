@@ -9,7 +9,6 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 
 import com.mercandalli.android.apps.test.R;
-import com.mercandalli.android.apps.test.app.AppEnum;
 import com.mercandalli.android.apps.test.launcher.LauncherActivity;
 
 import org.junit.Rule;
