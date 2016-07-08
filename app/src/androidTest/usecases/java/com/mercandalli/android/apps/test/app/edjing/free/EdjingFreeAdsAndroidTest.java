@@ -2,17 +2,13 @@ package com.mercandalli.android.apps.test.app.edjing.free;
 
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 
 import com.mercandalli.android.apps.test.app.AppSupported;
-import com.mercandalli.android.apps.test.uiautomator.UiAutomator;
-import com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.R.attr.id;
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.openApp;
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.sleep;
@@ -40,21 +36,23 @@ public final class EdjingFreeAdsAndroidTest {
         for (int i = 0; i < TIME_TO_TEST_ADS; i++) {
             openApp(AppSupported.EDJING_FREE);
 
-            // Skip tutorial
+            // Skip tutorial.
             sleep(2_000);
-            if(findObjectById("com.edjing.edjingdjturntable:id/tv_welcome").exists()) {
+            if (findObjectById("com.edjing.edjingdjturntable:id/tv_welcome").exists()) {
                 click("com.edjing.edjingdjturntable:id/btn_mix_right_now");
             }
 
-            // Wait the ad
+            // Wait the ad.
             sleep(5_000);
 
+            // Force stop the app.
             openAppSetting(AppSupported.EDJING_FREE);
             sleep(200);
             clickContainsText("force stop", "Forcer l'arrêt", "stop", "arrêt");
             click("android:id/button1");
 
-            if((i+1)%3==0) {
+            // Clear data.
+            if ((i + 1) % 3 == 0) {
                 clickContainsText("Clear data");
                 click("android:id/button1");
             }
