@@ -1,7 +1,9 @@
-package com.mercandalli.android.apps.test;
+package com.mercandalli.android.apps.test.uiautomator;
 
 import android.app.Activity;
+import android.app.Instrumentation;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Environment;
 import android.os.RemoteException;
@@ -13,11 +15,14 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.core.deps.guava.collect.Iterables;
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 import android.support.test.runner.lifecycle.Stage;
+import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
+import android.support.test.uiautomator.Until;
 
+import com.mercandalli.android.apps.test.app.AppEnum;
 import com.mercandalli.android.apps.test.generic.GenericConfig;
 import com.squareup.spoon.Spoon;
 
@@ -30,13 +35,15 @@ import java.util.List;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.findObjectById;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.findObjectContainsText;
 import static org.hamcrest.CoreMatchers.instanceOf;
 
 /**
  * An abstract test that launch the app and provide useful test methods.
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
-public class UiAutomatorLib {
+public class UiAutomator {
 
     /**
      * A simple thread sleep.
@@ -86,94 +93,6 @@ public class UiAutomatorLib {
     }
     //endregion UI AUTOMATOR base
 
-    //region - find object and determine object stats
-
-    /**
-     * Find an {@link UiObject} with the resource id.
-     *
-     * @param id The resource id (e.g. R.id.toolbar).
-     * @return The UiObject.
-     */
-    @NonNull
-    public static UiObject findObjectById(@IdRes final int id) {
-        return findObjectById(getResources().getResourceName(id));
-    }
-
-    /**
-     * Find an {@link UiObject} with the resource id.
-     *
-     * @param id The resource id (e.g. the_package_name:id/the_id).
-     * @return The UiObject.
-     */
-    @NonNull
-    public static UiObject findObjectById(final String id) {
-        return getDevice().findObject(new UiSelector().resourceId(id));
-    }
-
-    /**
-     * Find an {@link UiObject} with a specific {@link String} displayed.
-     *
-     * @param text A text displayed.
-     * @return The {@link UiObject}.
-     */
-    @NonNull
-    public static UiObject findObjectContainsText(final String text) {
-        return getDevice().findObject(new UiSelector().textContains(text));
-    }
-
-    /**
-     * Find an {@link UiObject} with a specific {@link String} displayed. For each {@link String}
-     * of the {@link List} given, this method returns the first {@link UiObject} textContains.
-     *
-     * @param texts A {@link List} of texts.
-     * @return The {@link UiObject}.
-     */
-    @NonNull
-    public static UiObject findObjectContainsText(final String... texts) {
-        if (texts.length == 0) {
-            throw new IllegalStateException("List empty");
-        }
-        for (final String text : texts) {
-            final UiObject objectContainsText = findObjectContainsText(text);
-            if (objectContainsText.exists()) {
-                return objectContainsText;
-            }
-        }
-        return findObjectContainsText(texts[0]);
-    }
-
-    /**
-     * Find an {@link UiObject} with a specific {@link String} displayed. For each {@link String}
-     * of the {@link List} given, this method returns the first {@link UiObject} textContains.
-     *
-     * @param texts A {@link List} of texts.
-     * @return The {@link UiObject}.
-     */
-    @NonNull
-    public static UiObject findObjectContainsText(final List<String> texts) {
-        if (texts.isEmpty()) {
-            throw new IllegalStateException("List empty");
-        }
-        for (final String text : texts) {
-            final UiObject objectContainsText = findObjectContainsText(text);
-            if (objectContainsText.exists()) {
-                return objectContainsText;
-            }
-        }
-        return findObjectContainsText(texts.get(0));
-    }
-
-    /**
-     * Find an {@link UiObject} with a specific {@link String} displayed.
-     *
-     * @param containsTextId The string resource id (e.g. R.string.the_id).
-     * @return The UiObject.
-     */
-    @NonNull
-    public static UiObject findObjectContainsText(@StringRes final int containsTextId) {
-        return getDevice().findObject(new UiSelector().textContains(getResources().getString(containsTextId)));
-    }
-
     /**
      * Is this {@link UiObject} clickable.
      *
@@ -184,105 +103,8 @@ public class UiAutomatorLib {
     public static boolean isObjectClickable(final UiObject uiObject) throws UiObjectNotFoundException {
         return uiObject != null && uiObject.exists() && uiObject.isClickable();
     }
-    //endregion - find object and determine object stats
 
     //region - click & swipe
-
-    /**
-     * Call clickAndWaitForNewWindow.*
-     *
-     * @param id The view id.
-     * @throws UiObjectNotFoundException
-     */
-    public static boolean click(
-            @IdRes final int id) throws UiObjectNotFoundException {
-        return findObjectById(id).click();
-    }
-
-    public static boolean click(
-            final String id) throws UiObjectNotFoundException {
-        return findObjectById(id).click();
-    }
-
-    /**
-     * Call clickAndWaitForNewWindow.
-     *
-     * @param id The view id.
-     * @throws UiObjectNotFoundException
-     */
-    public static boolean clickWaitNewWindow(
-            @IdRes final int id) throws UiObjectNotFoundException {
-        return clickWaitNewWindow(id, 5_500);
-    }
-
-    /**
-     * Call clickAndWaitForNewWindow.
-     *
-     * @param id      The view id.
-     * @param timeout timeout before giving up on waiting for a new window
-     * @throws UiObjectNotFoundException Throw an exception if not found.
-     */
-    public static boolean clickWaitNewWindow(
-            @IdRes final int id,
-            final long timeout) throws UiObjectNotFoundException {
-        return findObjectById(id).clickAndWaitForNewWindow(timeout);
-    }
-
-    /**
-     * Call clickAndWaitForNewWindow. You can use this method to click on external app view
-     * like a system popup or the launcher screen...
-     *
-     * @param id The full string id given by sdk/tools/uiautomatorviewer.bat.
-     *           (e.g. the_package_name:id/the_id).
-     * @return The clickAndWaitForNewWindow result.
-     * @throws UiObjectNotFoundException Throw an exception if not found.
-     */
-    public static boolean clickWaitNewWindow(
-            final String id) throws UiObjectNotFoundException {
-        return findObjectById(id).clickAndWaitForNewWindow(5_500);
-    }
-
-    /**
-     * Check if the object exists and click on it (wait new windows).
-     *
-     * @param containsText The text displayed.
-     * @return The clickAndWaitForNewWindow result.
-     * @throws UiObjectNotFoundException Throw an exception if not found.
-     */
-    public static boolean clickWaitNewWindowContainsText(
-            final String containsText) throws UiObjectNotFoundException {
-        final UiObject uiObject = findObjectContainsText(containsText);
-        Assert.assertTrue(uiObject.exists());
-        return uiObject.clickAndWaitForNewWindow(5_500);
-    }
-
-    /**
-     * Check if the object exists and click on it (wait new windows).
-     *
-     * @param containsText The text displayed.
-     * @return The clickAndWaitForNewWindow result.
-     * @throws UiObjectNotFoundException Throw an exception if not found.
-     */
-    public static boolean clickWaitNewWindowContainsText(
-            final String... containsText) throws UiObjectNotFoundException {
-        final UiObject uiObject = findObjectContainsText(containsText);
-        Assert.assertTrue(uiObject.exists());
-        return uiObject.clickAndWaitForNewWindow(5_500);
-    }
-
-    /**
-     * Check if the object exists and click on it (wait new windows).
-     *
-     * @param containsTextId The text displayed.
-     * @return The clickAndWaitForNewWindow result.
-     * @throws UiObjectNotFoundException Throw an exception if not found.
-     */
-    public static boolean clickWaitNewWindowContainsText(
-            @StringRes final int containsTextId) throws UiObjectNotFoundException {
-        final UiObject uiObject = findObjectContainsText(containsTextId);
-        Assert.assertTrue(uiObject.exists());
-        return uiObject.clickAndWaitForNewWindow(5_500);
-    }
 
     public static boolean swipeUpById(
             @IdRes final int id,
@@ -450,5 +272,25 @@ public class UiAutomatorLib {
         assertThat(currentActivity, instanceOf(activityClass));
         currentActivity.finish();
         sleep(800);
+    }
+
+    public static void openApp(@NonNull final AppEnum appEnum) {
+        openApp(appEnum.packageName);
+    }
+
+    public static void openApp(@NonNull final String packageName) {
+        final Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
+        final Context context = instrumentation.getContext();
+        final Intent intent = context.getPackageManager().getLaunchIntentForPackage(packageName);
+        if (intent == null) {
+            throw new IllegalStateException("App not found in UiAutomatorUtils openApp.");
+        }
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+
+        // Wait for the app to appear
+        getDevice().wait(Until.hasObject(By.pkg(packageName).depth(0)), 6_000);
+        instrumentation.waitForIdleSync();
     }
 }

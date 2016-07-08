@@ -22,11 +22,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.mercandalli.android.apps.test.TestApp.resetApp;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.getDevice;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.sleep;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.takeScreenShot;
-import static com.mercandalli.android.apps.test.UiAutomatorSettingsUtils.setWifi;
-import static com.mercandalli.android.apps.test.UiAutomatorUtils.openApp;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.openApp;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.sleep;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.takeScreenShot;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorSettings.setWifi;
 
 @LargeTest
 @Suppress

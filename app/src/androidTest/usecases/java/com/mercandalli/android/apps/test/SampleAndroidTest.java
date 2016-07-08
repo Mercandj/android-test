@@ -3,6 +3,7 @@ package com.mercandalli.android.apps.test;
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
+import android.support.test.filters.Suppress;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObjectNotFoundException;
@@ -14,14 +15,18 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static com.mercandalli.android.apps.test.TestApp.resetApp;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.click;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.getDevice;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.sleep;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.takeScreenShotSpoon;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.pressBack;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.pressHome;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.sleep;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.takeScreenShotSpoon;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.click;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.clickContainsText;
 
 @LargeTest
+@Suppress
 @RunWith(AndroidJUnit4.class)
-public final class LauncherAndroidTest {
+public final class SampleAndroidTest {
 
     /**
      * Has to be public.
@@ -38,22 +43,30 @@ public final class LauncherAndroidTest {
             };
 
     @Test
-    public void testPlaySimpleGame() throws UiObjectNotFoundException {
+    public void showMainActions() throws UiObjectNotFoundException {
+
+        // /!\ /!\ /!\
+        // Remove the @Suppress annotation of this class
+        // in order to use this method.
+
         getDevice();
+
         sleep(500);
 
-        takeScreenShotSpoon("launcher");
+        takeScreenShotSpoon("main_actions");
 
         click(R.id.launcher_activity_main_button);
 
         sleep(1_500);
 
-        UiAutomatorLib.pressHome();
+        pressHome();
 
         click("com.mercandalli.android.apps.launcher:id/activity_main_app_button");
 
-        UiAutomatorLib.findObjectContainsText("News", "Actualités", "actu").click();
+        clickContainsText("Actualité", "News", "Actu");
 
-        UiAutomatorLib.pressBack();
+        pressBack();
+
+        System.out.println("showMainActions succeeded.");
     }
 }

@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.test;
+package com.mercandalli.android.apps.test.uiautomator;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -18,10 +18,10 @@ import android.widget.ListView;
 
 import java.util.Locale;
 
-import static com.mercandalli.android.apps.test.UiAutomatorLib.findObjectById;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.getDevice;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.findObjectById;
 
-public final class UiAutomatorSettingsUtils {
+public final class UiAutomatorSettings {
 
     public static void openSettings() {
         final Context context = InstrumentationRegistry.getInstrumentation().getContext();

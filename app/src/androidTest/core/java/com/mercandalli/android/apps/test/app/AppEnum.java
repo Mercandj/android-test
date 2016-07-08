@@ -1,6 +1,6 @@
-package com.mercandalli.android.apps.test.generic;
+package com.mercandalli.android.apps.test.app;
 
-public enum GenericAppEnum {
+public enum AppEnum {
 
     YOUTUBE("youtube", "com.google.android.youtube"),
     GMAIL("gmail", "com.google.android.gm"),
@@ -12,9 +12,8 @@ public enum GenericAppEnum {
     public final String name;
     public final String packageName;
 
-    GenericAppEnum(String name, String packageName) {
+    AppEnum(String name, String packageName) {
         this.name = name;
         this.packageName = packageName;
     }
-
 }
