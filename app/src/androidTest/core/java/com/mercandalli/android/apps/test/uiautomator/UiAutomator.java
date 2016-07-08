@@ -10,7 +10,6 @@ import android.os.RemoteException;
 import android.os.SystemClock;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.core.deps.guava.collect.Iterables;
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
@@ -31,12 +30,10 @@ import junit.framework.Assert;
 import java.io.File;
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.List;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.findObjectById;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.findObjectContainsText;
 import static org.hamcrest.CoreMatchers.instanceOf;
 
 /**
