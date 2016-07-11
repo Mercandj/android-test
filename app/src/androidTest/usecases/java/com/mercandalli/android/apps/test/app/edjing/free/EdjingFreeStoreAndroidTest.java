@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.test.edjing.free;
+package com.mercandalli.android.apps.test.app.edjing.free;
 
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
@@ -14,16 +14,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static com.mercandalli.android.apps.test.TestApp.resetApp;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.click;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.clickWaitNewWindowContainsText;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.dragBottomList;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.findObjectById;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.findObjectContainsText;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.getDevice;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.pressBack;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.pressHome;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.sleep;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.takeScreenShotSpoon;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.dragBottomList;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.pressBack;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.pressHome;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.sleep;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.click;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.clickWaitNewWindowContainsText;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.findObjectById;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.findObjectContainsText;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -54,7 +53,7 @@ public final class EdjingFreeStoreAndroidTest {
         clickWaitNewWindowContainsText("edjing");
         sleep(5_500);
 
-        if (findObjectContainsText("ommencer","starting").exists()){
+        if (findObjectContainsText("ommencer", "starting").exists()) {
             click("com.edjing.edjingdjturntable:id/btn_mix_right_now");
         } else {
             //Waiting for ads display
@@ -63,7 +62,7 @@ public final class EdjingFreeStoreAndroidTest {
             //Go back to principal UI
             pressBack();
 
-            if (findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?","Do you really want to shut down the app?").exists()) {
+            if (findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?", "Do you really want to shut down the app?").exists()) {
                 click("android:id/button2");
             }
         }
@@ -110,7 +109,7 @@ public final class EdjingFreeStoreAndroidTest {
         clickWaitNewWindowContainsText("edjing");
         sleep(5_500);
 
-        if (findObjectContainsText("ommencer","starting").exists()){
+        if (findObjectContainsText("ommencer", "starting").exists()) {
             click("com.edjing.edjingdjturntable:id/btn_mix_right_now");
         } else {
             //Waiting for ads display
@@ -119,7 +118,7 @@ public final class EdjingFreeStoreAndroidTest {
             //Go back to principal UI
             pressBack();
 
-            if (findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?","Do you really want to shut down the app?").exists()) {
+            if (findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?", "Do you really want to shut down the app?").exists()) {
                 click("android:id/button2");
             }
         }
@@ -153,7 +152,6 @@ public final class EdjingFreeStoreAndroidTest {
         findObjectContainsText("Mes Mixes", "My Mixes").click();
         click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
         quitEdjingStore();
-
 
 
         //dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));

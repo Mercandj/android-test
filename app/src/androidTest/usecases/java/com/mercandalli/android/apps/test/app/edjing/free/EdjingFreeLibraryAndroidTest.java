@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.test.edjing.free;
+package com.mercandalli.android.apps.test.app.edjing.free;
 
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
@@ -14,16 +14,16 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static com.mercandalli.android.apps.test.TestApp.resetApp;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.click;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.clickWaitNewWindowContainsText;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.dragBottomList;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.dragTopList;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.findObjectById;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.findObjectContainsText;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.getDevice;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.pressBack;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.pressHome;
-import static com.mercandalli.android.apps.test.UiAutomatorLib.sleep;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.dragBottomList;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.dragTopList;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.pressBack;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.pressHome;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.sleep;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.click;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.clickWaitNewWindowContainsText;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.findObjectById;
+import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.findObjectContainsText;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
