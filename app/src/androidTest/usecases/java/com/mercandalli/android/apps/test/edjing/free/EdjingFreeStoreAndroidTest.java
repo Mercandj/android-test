@@ -52,13 +52,20 @@ public final class EdjingFreeStoreAndroidTest {
 
         //click("com.ape.launcher:id/app_icon_title");
         clickWaitNewWindowContainsText("edjing");
-        //Waiting for ads display
         sleep(5_500);
-        //Go back to principal UI
-        pressBack();
 
-        if (findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?").exists()) {
-            click("android:id/button2");
+        if (findObjectContainsText("ommencer","starting").exists()){
+            click("com.edjing.edjingdjturntable:id/btn_mix_right_now");
+        } else {
+            //Waiting for ads display
+            sleep(5_500);
+
+            //Go back to principal UI
+            pressBack();
+
+            if (findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?","Do you really want to shut down the app?").exists()) {
+                click("android:id/button2");
+            }
         }
 
         //Click on FX
@@ -101,13 +108,20 @@ public final class EdjingFreeStoreAndroidTest {
 
         //click("com.ape.launcher:id/app_icon_title");
         clickWaitNewWindowContainsText("edjing");
-        //Waiting for ads display
         sleep(5_500);
-        //Go back to principal UI
-        pressBack();
 
-        if (findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?").exists()) {
-            click("android:id/button2");
+        if (findObjectContainsText("ommencer","starting").exists()){
+            click("com.edjing.edjingdjturntable:id/btn_mix_right_now");
+        } else {
+            //Waiting for ads display
+            sleep(5_500);
+
+            //Go back to principal UI
+            pressBack();
+
+            if (findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?","Do you really want to shut down the app?").exists()) {
+                click("android:id/button2");
+            }
         }
 
         //Click on "no ads"
@@ -120,7 +134,7 @@ public final class EdjingFreeStoreAndroidTest {
 
         //Go to library
         click("com.edjing.edjingdjturntable:id/platine_menu_bottom_play_button_deckA");
-        findObjectContainsText("Titres", "Titles").click();
+        findObjectContainsText("Titres", "Tracks").click();
         click("com.edjing.edjingdjturntable:id/header_fullpack_get_it");
         quitEdjingStore();
 
