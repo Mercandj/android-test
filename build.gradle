@@ -10,7 +10,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.1.2'
-        classpath 'com.google.gms:google-services:3.0.0'
 
         // Test - take screenshot, output tests...
         // https://github.com/square/spoon
@@ -20,10 +19,6 @@ buildscript {
         // Check dependencies.
         // https://github.com/ben-manes/gradle-versions-plugin
         classpath 'com.github.ben-manes:gradle-versions-plugin:0.12.0'
-
-        // Publish apk via gradle
-        // https://github.com/Triple-T/gradle-play-publisher
-        classpath 'com.github.triplet.gradle:play-publisher:1.1.4'
     }
 }
 
