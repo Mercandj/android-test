@@ -28,20 +28,6 @@ import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.find
 @RunWith(AndroidJUnit4.class)
 public final class EdjingFreeStoreAndroidTest {
 
-    /**
-     * Has to be public.
-     */
-    @Rule
-    @NonNull
-    public final ActivityTestRule<LauncherActivity> activityRule =
-            new ActivityTestRule<LauncherActivity>(LauncherActivity.class) {
-                @Override
-                protected void beforeActivityLaunched() {
-                    super.beforeActivityLaunched();
-                    resetApp(InstrumentationRegistry.getTargetContext());
-                }
-            };
-
     @Test
     public void testEdjingFreeStore() throws UiObjectNotFoundException {
         getDevice();

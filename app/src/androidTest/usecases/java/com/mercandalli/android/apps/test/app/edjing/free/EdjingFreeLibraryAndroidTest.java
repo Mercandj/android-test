@@ -1,19 +1,12 @@
 package com.mercandalli.android.apps.test.app.edjing.free;
 
-import android.support.annotation.NonNull;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 
-import com.mercandalli.android.apps.test.launcher.LauncherActivity;
-
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static com.mercandalli.android.apps.test.TestApp.resetApp;
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.dragBottomList;
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.dragTopList;
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
@@ -27,21 +20,7 @@ import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.find
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public final class EdjingFreeLibraryAndroidTest {
-
-    /**
-     * Has to be public.
-     */
-    @Rule
-    @NonNull
-    public final ActivityTestRule<LauncherActivity> activityRule =
-            new ActivityTestRule<LauncherActivity>(LauncherActivity.class) {
-                @Override
-                protected void beforeActivityLaunched() {
-                    super.beforeActivityLaunched();
-                    resetApp(InstrumentationRegistry.getTargetContext());
-                }
-            };
+public final class EdjingFreeLibraryAndroidTest {n
 
     @Test
     public void testEdjingFreeNoAds() throws UiObjectNotFoundException {
