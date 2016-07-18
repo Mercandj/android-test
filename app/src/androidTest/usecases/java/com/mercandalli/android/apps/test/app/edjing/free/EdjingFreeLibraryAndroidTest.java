@@ -19,6 +19,7 @@ import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.find
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.findObjectContainsText;
 
 @LargeTest
+//@Suppress
 @RunWith(AndroidJUnit4.class)
 public final class EdjingFreeLibraryAndroidTest {
 
