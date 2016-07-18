@@ -20,7 +20,7 @@ import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.find
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public final class EdjingFreeLibraryAndroidTest {n
+public final class EdjingFreeLibraryAndroidTest {
 
     @Test
     public void testEdjingFreeNoAds() throws UiObjectNotFoundException {
