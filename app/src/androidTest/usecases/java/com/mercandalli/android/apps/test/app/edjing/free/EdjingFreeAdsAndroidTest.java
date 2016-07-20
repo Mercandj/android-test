@@ -17,6 +17,9 @@ import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.cli
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.findObjectById;
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorSettings.openAppSetting;
 
+/**
+ * Comment the @Suppress to use this class.
+ */
 @LargeTest
 //@Suppress
 @RunWith(AndroidJUnit4.class)

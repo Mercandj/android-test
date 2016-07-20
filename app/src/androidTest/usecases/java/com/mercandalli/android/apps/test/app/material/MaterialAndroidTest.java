@@ -14,6 +14,9 @@ import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.pressHom
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.click;
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.clickContainsText;
 
+/**
+ * Comment the @Suppress to use this class.
+ */
 @LargeTest
 @Suppress
 @RunWith(AndroidJUnit4.class)
