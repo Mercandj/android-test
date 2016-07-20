@@ -9,7 +9,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 
 import com.mercandalli.android.apps.test.R;
-import com.mercandalli.android.apps.test.launcher.LauncherActivity;
+import com.mercandalli.android.apps.test.LauncherActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -22,6 +22,9 @@ import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.sleep;
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.takeScreenShotSpoon;
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.click;
 
+/**
+ * Comment the @Suppress to use this class.
+ */
 @LargeTest
 @Suppress
 @RunWith(AndroidJUnit4.class)

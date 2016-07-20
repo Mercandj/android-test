@@ -13,6 +13,9 @@ import org.junit.runner.RunWith;
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
 import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.openApp;
 
+/**
+ * Comment the @Suppress to use this class.
+ */
 @LargeTest
 @Suppress
 @RunWith(AndroidJUnit4.class)

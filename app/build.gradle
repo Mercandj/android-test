@@ -13,7 +13,7 @@ apply from: '../config/quality/quality.gradle'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24"
+    buildToolsVersion "24.0.1"
 
     defaultConfig {
         applicationId "com.mercandalli.android.apps.test"
@@ -112,21 +112,21 @@ dependencies {
 
     compile 'com.android.support:multidex:1.0.1'
 
-    compile 'com.android.support:support-annotations:24.0.0'
-    compile 'com.android.support:appcompat-v7:24.0.0'
-    compile 'com.android.support:design:24.0.0'
-    compile 'com.android.support:cardview-v7:24.0.0'
-    compile 'com.android.support:recyclerview-v7:24.0.0'
+    compile 'com.android.support:support-annotations:24.1.0'
+    compile 'com.android.support:appcompat-v7:24.1.0'
+    compile 'com.android.support:design:24.1.0'
+    compile 'com.android.support:cardview-v7:24.1.0'
+    compile 'com.android.support:recyclerview-v7:24.1.0'
 
     compile rootProject.ext.dependencies.base
 
     // Testing-only dependencies
-    androidTestCompile 'com.android.support:support-annotations:24.0.0'
+    androidTestCompile 'com.android.support:support-annotations:24.1.0'
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
     // Test - take screenshot, output tests...
     // https://github.com/square/spoon
-    androidTestCompile 'com.squareup.spoon:spoon-client:1.5.7'
+    androidTestCompile 'com.squareup.spoon:spoon-client:1.6.1'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2.2'
     androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2.2') {

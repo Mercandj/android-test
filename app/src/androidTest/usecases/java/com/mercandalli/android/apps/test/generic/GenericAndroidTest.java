@@ -12,7 +12,7 @@ import android.support.test.uiautomator.UiObject2;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.util.Log;
 
-import com.mercandalli.android.apps.test.launcher.LauncherActivity;
+import com.mercandalli.android.apps.test.LauncherActivity;
 
 import org.junit.Rule;
 import org.junit.Test;

@@ -10,7 +10,7 @@ import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 
 import com.mercandalli.android.apps.test.uiautomator.UiAutomatorLanguageEnum;
-import com.mercandalli.android.apps.test.launcher.LauncherActivity;
+import com.mercandalli.android.apps.test.LauncherActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
