@@ -4,6 +4,8 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 import android.support.test.InstrumentationRegistry;
 
+import com.mercandalli.android.apps.test.TestoApp;
+
 public class TestApp extends TestoApp {
 
     public static void resetApp(final Context targetContext) {

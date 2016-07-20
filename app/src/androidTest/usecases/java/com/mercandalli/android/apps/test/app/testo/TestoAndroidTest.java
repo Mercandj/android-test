@@ -16,11 +16,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static com.mercandalli.android.apps.test.TestApp.resetApp;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.openApp;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.sleep;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.takeScreenShotSpoon;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.click;
+import static android.support.test.uiautomator.UiAutomator.getDevice;
+import static android.support.test.uiautomator.UiAutomator.openApp;
+import static android.support.test.uiautomator.UiAutomator.sleep;
+import static android.support.test.uiautomator.UiAutomator.takeScreenShotSpoon;
+import static android.support.test.uiautomator.UiAutomatorClick.click;
 
 /**
  * Comment the @Suppress to use this class.

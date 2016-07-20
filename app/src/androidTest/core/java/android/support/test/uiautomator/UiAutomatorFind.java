@@ -1,15 +1,13 @@
-package com.mercandalli.android.apps.test.uiautomator;
+package android.support.test.uiautomator;
 
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
-import android.support.test.uiautomator.UiObject;
-import android.support.test.uiautomator.UiSelector;
 
 import java.util.List;
 
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getResources;
+import static android.support.test.uiautomator.UiAutomator.getDevice;
+import static android.support.test.uiautomator.UiAutomator.getResources;
 
 /**
  * An abstract test that launch the app and provide useful test methods.

@@ -9,13 +9,13 @@ import com.mercandalli.android.apps.test.app.AppSupported;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.openApp;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.sleep;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.click;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.clickContainsText;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.findObjectById;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorSettings.openAppSetting;
+import static android.support.test.uiautomator.UiAutomator.getDevice;
+import static android.support.test.uiautomator.UiAutomator.openApp;
+import static android.support.test.uiautomator.UiAutomator.sleep;
+import static android.support.test.uiautomator.UiAutomatorClick.click;
+import static android.support.test.uiautomator.UiAutomatorClick.clickContainsText;
+import static android.support.test.uiautomator.UiAutomatorFind.findObjectById;
+import static android.support.test.uiautomator.UiAutomatorSettings.openAppSetting;
 
 /**
  * Comment the @Suppress to use this class.
