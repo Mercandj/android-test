@@ -1,10 +1,11 @@
-package com.mercandalli.android.apps.test.uiautomator;
+package android.support.test.uiautomator;
 
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
+import com.mercandalli.android.apps.test.app.AppSupported;
 import android.os.Environment;
 import android.os.RemoteException;
 import android.os.SystemClock;
@@ -14,14 +15,7 @@ import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.core.deps.guava.collect.Iterables;
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 import android.support.test.runner.lifecycle.Stage;
-import android.support.test.uiautomator.By;
-import android.support.test.uiautomator.UiDevice;
-import android.support.test.uiautomator.UiObject;
-import android.support.test.uiautomator.UiObjectNotFoundException;
-import android.support.test.uiautomator.UiSelector;
-import android.support.test.uiautomator.Until;
 
-import com.mercandalli.android.apps.test.app.AppSupported;
 import com.mercandalli.android.apps.test.generic.GenericConfig;
 import com.squareup.spoon.Spoon;
 
@@ -33,7 +27,7 @@ import java.util.Date;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.findObjectById;
+import static android.support.test.uiautomator.UiAutomatorFind.findObjectById;
 import static org.hamcrest.CoreMatchers.instanceOf;
 
 /**
@@ -106,25 +100,25 @@ public class UiAutomator {
     public static boolean swipeUpById(
             @IdRes final int id,
             final int speedSteps) throws UiObjectNotFoundException {
-        return findObjectById(id).swipeUp(speedSteps);
+        return UiAutomatorFind.findObjectById(id).swipeUp(speedSteps);
     }
 
     public static boolean swipeDownById(
             @IdRes final int id,
             final int speedSteps) throws UiObjectNotFoundException {
-        return findObjectById(id).swipeDown(speedSteps);
+        return UiAutomatorFind.findObjectById(id).swipeDown(speedSteps);
     }
 
     public static boolean swipeLeftById(
             @IdRes final int id,
             final int speedSteps) throws UiObjectNotFoundException {
-        return findObjectById(id).swipeLeft(speedSteps);
+        return UiAutomatorFind.findObjectById(id).swipeLeft(speedSteps);
     }
 
     public static boolean swipeRightById(
             @IdRes final int id,
             final int speedSteps) throws UiObjectNotFoundException {
-        return findObjectById(id).swipeRight(speedSteps);
+        return UiAutomatorFind.findObjectById(id).swipeRight(speedSteps);
     }
     //endregion - click & swipe
 
@@ -132,7 +126,7 @@ public class UiAutomator {
     public static void setText(
             final String id,
             final String text) throws UiObjectNotFoundException {
-        final UiObject objectById = findObjectById(id);
+        final UiObject objectById = UiAutomatorFind.findObjectById(id);
         objectById.clickAndWaitForNewWindow(100);
         objectById.setText(text);
     }
@@ -172,7 +166,7 @@ public class UiAutomator {
     }
 
     public static boolean isObjectClickable(@IdRes final int id) throws UiObjectNotFoundException {
-        return findObjectById(id).exists();
+        return UiAutomatorFind.findObjectById(id).exists();
     }
 
     public static boolean isObjectExistsContains(final String textContains) {

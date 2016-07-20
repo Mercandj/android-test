@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.test.uiautomator;
+package android.support.test.uiautomator;
 
 import android.support.annotation.Nullable;
 

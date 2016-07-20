@@ -8,11 +8,11 @@ import android.support.test.uiautomator.UiObjectNotFoundException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.pressBack;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.pressHome;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.click;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.clickContainsText;
+import static android.support.test.uiautomator.UiAutomator.getDevice;
+import static android.support.test.uiautomator.UiAutomator.pressBack;
+import static android.support.test.uiautomator.UiAutomator.pressHome;
+import static android.support.test.uiautomator.UiAutomatorClick.click;
+import static android.support.test.uiautomator.UiAutomatorClick.clickContainsText;
 
 /**
  * Comment the @Suppress to use this class.

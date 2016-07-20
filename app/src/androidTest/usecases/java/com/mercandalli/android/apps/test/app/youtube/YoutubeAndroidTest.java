@@ -10,8 +10,8 @@ import com.mercandalli.android.apps.test.app.AppSupported;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.openApp;
+import static android.support.test.uiautomator.UiAutomator.getDevice;
+import static android.support.test.uiautomator.UiAutomator.openApp;
 
 /**
  * Comment the @Suppress to use this class.

@@ -1,4 +1,4 @@
-package com.mercandalli.android.apps.test.uiautomator;
+package android.support.test.uiautomator;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -8,11 +8,6 @@ import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.uiautomator.UiDevice;
-import android.support.test.uiautomator.UiObject;
-import android.support.test.uiautomator.UiObjectNotFoundException;
-import android.support.test.uiautomator.UiScrollable;
-import android.support.test.uiautomator.UiSelector;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ListView;
 
@@ -20,8 +15,8 @@ import com.mercandalli.android.apps.test.app.AppSupported;
 
 import java.util.Locale;
 
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.findObjectById;
+import static android.support.test.uiautomator.UiAutomator.getDevice;
+import static android.support.test.uiautomator.UiAutomatorFind.findObjectById;
 
 public final class UiAutomatorSettings {
 

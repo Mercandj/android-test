@@ -9,7 +9,7 @@ import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 
-import com.mercandalli.android.apps.test.uiautomator.UiAutomatorLanguageEnum;
+import android.support.test.uiautomator.UiAutomatorLanguageEnum;
 import com.mercandalli.android.apps.test.LauncherActivity;
 
 import org.junit.Rule;
@@ -17,10 +17,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static com.mercandalli.android.apps.test.TestApp.resetApp;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.openApp;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.takeScreenShot;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorSettings.changeLanguage;
+import static android.support.test.uiautomator.UiAutomator.getDevice;
+import static android.support.test.uiautomator.UiAutomator.openApp;
+import static android.support.test.uiautomator.UiAutomator.takeScreenShot;
+import static android.support.test.uiautomator.UiAutomatorSettings.changeLanguage;
 
 @LargeTest
 @Suppress

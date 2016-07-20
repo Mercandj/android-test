@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId "com.mercandalli.android.apps.test"
-        minSdkVersion 10
+        minSdkVersion 14
         targetSdkVersion 24
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
