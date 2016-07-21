@@ -21,6 +21,7 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.support.test.uiautomator.UiAutomator.takeScreenShotGeneric;
 import static com.mercandalli.android.apps.test.TestApp.resetApp;
 import static android.support.test.uiautomator.UiAutomator.getDevice;
 import static android.support.test.uiautomator.UiAutomator.openApp;
@@ -105,7 +106,7 @@ public final class GenericAndroidTest {
             obj1.get(currentItem1).click();
             sleep(1_600);
 
-            takeScreenShot(GenericConfig.PACKAGE_TO_TEST + "_" + currentItem1 + "_" + currentItem2 + "_" + currentItem3 + "_1");
+            takeScreenShotGeneric(GenericConfig.PACKAGE_TO_TEST + "_" + currentItem1 + "_" + currentItem2 + "_" + currentItem3 + "_1");
 
             final List<UiObject2> obj2 = getObj();
             currentSize2 = obj2.size();
@@ -114,7 +115,7 @@ public final class GenericAndroidTest {
                 sleep(1_600);
             }
 
-            takeScreenShot(GenericConfig.PACKAGE_TO_TEST + "_" + currentItem1 + "_" + currentItem2 + "_" + currentItem3 + "_2");
+            takeScreenShotGeneric(GenericConfig.PACKAGE_TO_TEST + "_" + currentItem1 + "_" + currentItem2 + "_" + currentItem3 + "_2");
 
             final List<UiObject2> obj3 = getObj();
             currentSize3 = obj3.size();
@@ -123,7 +124,7 @@ public final class GenericAndroidTest {
                 sleep(1_600);
             }
 
-            takeScreenShot(GenericConfig.PACKAGE_TO_TEST + "_" + currentItem1 + "_" + currentItem2 + "_" + currentItem3 + "_3");
+            takeScreenShotGeneric(GenericConfig.PACKAGE_TO_TEST + "_" + currentItem1 + "_" + currentItem2 + "_" + currentItem3 + "_3");
 
             if (currentItem3 - 1 < currentSize3) {
                 currentItem3++;
