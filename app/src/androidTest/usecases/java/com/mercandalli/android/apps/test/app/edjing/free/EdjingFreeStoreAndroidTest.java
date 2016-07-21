@@ -1,28 +1,22 @@
 package com.mercandalli.android.apps.test.app.edjing.free;
 
-import android.support.annotation.NonNull;
-import android.support.test.InstrumentationRegistry;
 import android.support.test.filters.LargeTest;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 
-import com.mercandalli.android.apps.test.launcher.LauncherActivity;
 
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static com.mercandalli.android.apps.test.TestApp.resetApp;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.dragBottomList;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.pressBack;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.pressHome;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.sleep;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.click;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.clickWaitNewWindowContainsText;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.findObjectById;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.findObjectContainsText;
+import static android.support.test.uiautomator.UiAutomator.dragBottomList;
+import static android.support.test.uiautomator.UiAutomator.getDevice;
+import static android.support.test.uiautomator.UiAutomator.pressBack;
+import static android.support.test.uiautomator.UiAutomator.pressHome;
+import static android.support.test.uiautomator.UiAutomator.sleep;
+import static android.support.test.uiautomator.UiAutomatorClick.click;
+import static android.support.test.uiautomator.UiAutomatorClick.clickWaitNewWindowContainsText;
+import static android.support.test.uiautomator.UiAutomatorFind.findObjectById;
+import static android.support.test.uiautomator.UiAutomatorFind.findObjectContainsText;
 
 @LargeTest
 //@Suppress

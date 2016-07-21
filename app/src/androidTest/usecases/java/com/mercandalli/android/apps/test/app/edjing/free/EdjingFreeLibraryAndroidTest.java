@@ -7,22 +7,24 @@ import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
 
 import com.mercandalli.android.apps.test.app.AppSupported;
-import com.mercandalli.android.apps.test.uiautomator.UiAutomator;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.dragBottomList;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.dragTopList;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.getDevice;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.openApp;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.pressBack;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.pressHome;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomator.sleep;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.click;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorClick.clickWaitNewWindowContainsText;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.findObjectById;
-import static com.mercandalli.android.apps.test.uiautomator.UiAutomatorFind.findObjectContainsText;
+import static android.support.test.uiautomator.UiAutomator.dragBottomList;
+import static android.support.test.uiautomator.UiAutomator.dragTopList;
+import static android.support.test.uiautomator.UiAutomator.getCurrentDateString;
+import static android.support.test.uiautomator.UiAutomator.getDevice;
+import static android.support.test.uiautomator.UiAutomator.openApp;
+import static android.support.test.uiautomator.UiAutomator.pressBack;
+import static android.support.test.uiautomator.UiAutomator.pressHome;
+import static android.support.test.uiautomator.UiAutomator.sleep;
+import static android.support.test.uiautomator.UiAutomatorClick.click;
+import static android.support.test.uiautomator.UiAutomatorClick.clickContainsText;
+import static android.support.test.uiautomator.UiAutomatorClick.clickTopRight;
+import static android.support.test.uiautomator.UiAutomatorClick.clickWaitNewWindowContainsText;
+import static android.support.test.uiautomator.UiAutomatorFind.findObjectById;
+import static android.support.test.uiautomator.UiAutomatorFind.findObjectContainsText;
 
 @LargeTest
 //@Suppress
@@ -40,7 +42,7 @@ public final class EdjingFreeLibraryAndroidTest {
         openApp(AppSupported.EDJING_FREE);
         sleep(5_500);
 
-        if (findObjectContainsText("commencer","starting").exists()){
+        if (findObjectContainsText("commencer", "starting").exists()) {
             click("com.edjing.edjingdjturntable:id/btn_mix_right_now");
         } else {
             //Waiting for ads display
@@ -49,13 +51,23 @@ public final class EdjingFreeLibraryAndroidTest {
             //Go back to principal UI
             pressBack();
 
-            if (findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?","Do you really want to shut down the app?").exists()) {
+            if (findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?", "Do you really want to shut down the app?").exists()) {
                 click("android:id/button2");
             }
         }
 
         //Go to library
         click("com.edjing.edjingdjturntable:id/platine_menu_bottom_play_button_deckA");
+
+        //Go to Local
+
+        if (findObjectContainsText("Local").exists()) {
+            findObjectContainsText("Titres", "Tracks").click();
+        }
+        else {
+            findObjectById("com.edjing.edjingdjturntable:id/library_frame").clickTopLeft();
+            clickContainsText("Local");
+        }
 
         //Go to queue and delete items
         click("com.edjing.edjingdjturntable:id/queue_fab");
@@ -68,54 +80,152 @@ public final class EdjingFreeLibraryAndroidTest {
         clickWaitNewWindowContainsText("Playlists");
         while (findObjectById("com.edjing.edjingdjturntable:id/row_playlist_library").exists()) {
             click("com.edjing.edjingdjturntable:id/row_playlist_library_cover");
-            findObjectById("com.edjing.edjingdjturntable:id/activity_playlist_clipping_header").clickTopLeft();
-
+            clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_playlist_clipping_header"));
+            clickWaitNewWindowContainsText("Delete","Supprimer");
+            click("android:id/button1");
         }
 
 
         //Go to tracks
+
+        UiObject list;
+        UiObject child;
+
         findObjectContainsText("Titres", "Tracks").click();
+        //Add a track to the queue by clicking on a cover
         click("com.edjing.edjingdjturntable:id/row_track_library_cover");
         sleep(1_500);
-        if (findObjectContainsText("attente","queue").exists()){
+        if (findObjectContainsText("attente", "queue").exists()) {
             click("android:id/button1");
         }
         dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
         sleep(1_500);
         pressBack();
         sleep(1_500);
+
         dragTopList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
-        sleep(1_500);
+        //Add a track to the queue by clicking on the multiselection tick
+        click("com.edjing.edjingdjturntable:id/row_track_library_overflow_button");
+        click("com.edjing.edjingdjturntable:id/dialog_add_all_ok");
+
+
         dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
         sleep(1_500);
         pressBack();
-        UiObject list = findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list");
-        UiObject child = list.getChild(new UiSelector().index(list.getChildCount() - 2));
+        list = findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list");
+        //Add a track to the queue by clicking on the contextual menu
+        child = list.getChild(new UiSelector().index(list.getChildCount() - 2));
         child.getChild(new UiSelector().resourceId("com.edjing.edjingdjturntable:id/row_track_library_overflow_button")).clickTopLeft();
         sleep(1_500);
         findObjectContainsText("Ajouter à la file d'attente", "Add to the queue").click();
-        if (findObjectContainsText("attente","queue").exists()){
+        if (findObjectContainsText("attente", "queue").exists()) {
             click("android:id/button2");
         }
         sleep(1_500);
+
         dragTopList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
-        UiObject list0 = findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list");
-        UiObject child0 = list.getChild(new UiSelector().index(list.getChildCount() - 2));
+        list = findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list");
+        //Add a track to a playlist by clicking on the contextual menu
+        child = list.getChild(new UiSelector().index(list.getChildCount() - 3));
         child.getChild(new UiSelector().resourceId("com.edjing.edjingdjturntable:id/row_track_library_overflow_button")).clickTopLeft();
         findObjectContainsText("Ajouter à une playlist", "Add to a playlist").click();
+        //Create playlist
         click("android:id/button2");
-        findObjectById("com.edjing.edjingdjturntable:id/dialog_edit_text_edit_text").setText("toto " + UiAutomator.getCurrentDateString());
+        findObjectById("com.edjing.edjingdjturntable:id/dialog_edit_text_edit_text").setText("riri " + getCurrentDateString());
         click("android:id/button1");
 
-
+        //Go to artist tab
         findObjectContainsText("Artistes", "Artists").click();
         dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
+        dragTopList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
+        //Add an artist to the queue
+        list = findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list");
+        child = list.getChild(new UiSelector().index(list.getChildCount() - 2));
+        child.getChild(new UiSelector().resourceId("com.edjing.edjingdjturntable:id/row_artist_library_cover")).click();
+        clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_artist_clipping_header"));
+        findObjectContainsText("Ajouter toutes les tracks apparentes à la file d'attente", "Add all apparent tracks to the queue").click();
+        click("com.edjing.edjingdjturntable:id/dialog_add_all_ok");
+        //Add an artist to a playlist
+        clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_artist_clipping_header"));
+        findObjectContainsText("Ajouter à une playlist", "Add to playlist").click();
+        click("android:id/button1");
+        pressBack();
+
+
         clickWaitNewWindowContainsText("Albums");
         dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
+        dragTopList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
+        list = findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list");
+        child = list.getChild(new UiSelector().index(list.getChildCount() - 2));
+        child.getChild(new UiSelector().resourceId("com.edjing.edjingdjturntable:id/row_album_library_cover")).click();
+        clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_album_clipping_header"));
+        findObjectContainsText("Ajouter toutes les tracks apparentes à la file d'attente", "Add all apparent tracks to the queue").click();
+        click("com.edjing.edjingdjturntable:id/dialog_add_all_ok");
+        clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_album_clipping_header"));
+        findObjectContainsText("Ajouter à une playlist", "Add to playlist").click();
+        click("android:id/button1");
+        clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_album_clipping_header"));
+        findObjectContainsText("Ajouter à une playlist", "Add to playlist").click();
+        click("android:id/button2");
+        findObjectById("com.edjing.edjingdjturntable:id/dialog_edit_text_edit_text").setText("fifi " + getCurrentDateString());
+        click("android:id/button1");
+        pressBack();
+
         clickWaitNewWindowContainsText("Playlists");
-        dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
+        list = findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list");
+        child = list.getChild(new UiSelector().index(list.getChildCount() - 2));
+        child.getChild(new UiSelector().resourceId("com.edjing.edjingdjturntable:id/row_playlist_library_cover")).click();
+        clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_playlist_clipping_header"));
+        findObjectContainsText("Ajouter toutes les tracks apparentes à la file d'attente", "Add all apparent tracks to the queue").click();
+        click("com.edjing.edjingdjturntable:id/dialog_add_all_ok");
+        pressBack();
+        click("com.edjing.edjingdjturntable:id/row_playlist_library_cover");
+        clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_playlist_clipping_header"));
+        findObjectContainsText("Rennomer", "Edit").click();
+        findObjectById("com.edjing.edjingdjturntable:id/dialog_edit_text_edit_text").setText("ririlerelou " + getCurrentDateString());
+        click("android:id/button1");
+        pressBack();
+
+        click("com.edjing.edjingdjturntable:id/queue_fab");
+        dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/view_current_setlist_list_view"));
+        dragTopList(findObjectById("com.edjing.edjingdjturntable:id/view_current_setlist_list_view"));
+        clickTopRight(findObjectById("android:id/content"));
+        findObjectContainsText("Sauvegarder comme une playlist", "Save as a playlist").click();
+        click("android:id/button2");
+        findObjectById("com.edjing.edjingdjturntable:id/dialog_edit_text_edit_text").setText("loulou " + getCurrentDateString());
+        click("android:id/button1");
+        click("com.edjing.edjingdjturntable:id/automix_fab");
+        //Waiting for ads
+        sleep(2_500);
+        pressBack();
+        sleep(5_000);
+        //Quit automix
+        pressBack();
+        click("android:id/button1");
+        //Start record
+        click("com.edjing.edjingdjturntable:id/platine_top_menu_record_flash");
+        click("com.edjing.edjingdjturntable:id/cover_deck_b");
+        click("com.edjing.edjingdjturntable:id/queue_fab");
+        //Launch automix
+        click("com.edjing.edjingdjturntable:id/automix_fab");
+        sleep(120_000);
+        pressBack();
+        click("android:id/button1");
+        //Waiting for ads
+        sleep(2_500);
+        pressBack();
+        //Stop the record
+        click("com.edjing.edjingdjturntable:id/platine_top_menu_record_flash");
+        sleep(6_000);
+        findObjectById("com.edjing.edjingdjturntable:id/mixTitleEditText").setText("ð/ĳµ…}ù_~⌨ " + getCurrentDateString());
+        findObjectById("com.edjing.edjingdjturntable:id/mixArtistNameEditText").setText("ð/ẞĳµ…}ù_~⌨ " + getCurrentDateString());
+        findObjectById("com.edjing.edjingdjturntable:id/mixTagsEditText").setText("ð/♦,☺ĳµ…}ù_~⌨ " + getCurrentDateString());
+        click("com.edjing.edjingdjturntable:id/backButton");
+        click("com.edjing.edjingdjturntable:id/cover_deck_a");
+
         findObjectContainsText("Mes Mixes", "My Mixes").click();
         dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
+
 
 
         //dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
@@ -127,6 +237,7 @@ public final class EdjingFreeLibraryAndroidTest {
 
 
     }
+
 
     private void quitEdjingStore() {
         sleep(5_500);
