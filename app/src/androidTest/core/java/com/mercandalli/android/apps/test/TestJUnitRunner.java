@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.support.annotation.Nullable;
 import android.support.test.runner.AndroidJUnitRunner;
 
 import static android.content.Context.KEYGUARD_SERVICE;
@@ -31,6 +32,7 @@ import static android.content.Context.POWER_SERVICE;
 @SuppressWarnings({"deprecation", "unused"})
 public class TestJUnitRunner extends AndroidJUnitRunner {
 
+    @Nullable
     private PowerManager.WakeLock mWakeLock;
 
     @Override
@@ -63,7 +65,9 @@ public class TestJUnitRunner extends AndroidJUnitRunner {
         runOnMainSync(new Runnable() {
             @Override
             public void run() {
-                mWakeLock.release();
+                if (mWakeLock != null) {
+                    mWakeLock.release();
+                }
             }
         });
         super.onDestroy();

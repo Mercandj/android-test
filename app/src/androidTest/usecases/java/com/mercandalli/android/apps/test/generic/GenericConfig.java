@@ -7,7 +7,7 @@ import com.mercandalli.android.apps.test.app.AppSupported;
 public class GenericConfig {
 
     @NonNull
-    private final static AppSupported APP = AppSupported.PONG_FADER;
+    public final static AppSupported APP = AppSupported.PONG_FADER;
 
     @NonNull
     public final static String PACKAGE_TO_TEST = APP.packageName;

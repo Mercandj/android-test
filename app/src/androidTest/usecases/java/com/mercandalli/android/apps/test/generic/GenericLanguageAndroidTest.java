@@ -16,6 +16,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import static android.support.test.uiautomator.UiAutomator.takeScreenShotGeneric;
 import static com.mercandalli.android.apps.test.TestApp.resetApp;
 import static android.support.test.uiautomator.UiAutomator.getDevice;
 import static android.support.test.uiautomator.UiAutomator.openApp;
@@ -43,7 +44,7 @@ public final class GenericLanguageAndroidTest {
     @Test
     public void testLanguage() throws UiObjectNotFoundException {
         final UiDevice device = getDevice();
-        takeScreenShot("test");
+        takeScreenShotGeneric("test");
         for (final UiAutomatorLanguageEnum uiAutomatorLanguageEnum : UiAutomatorLanguageEnum.values()) {
             launchInLanguage(
                     uiAutomatorLanguageEnum,
@@ -57,6 +58,6 @@ public final class GenericLanguageAndroidTest {
             final String title) throws UiObjectNotFoundException {
         changeLanguage(uiAutomatorLanguageEnum);
         openApp(GenericConfig.PACKAGE_TO_TEST);
-        takeScreenShot(title);
+        takeScreenShotGeneric(title);
     }
 }

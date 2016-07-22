@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.uiautomator.UiAutomator.getDevice;
 import static android.support.test.uiautomator.UiAutomator.openApp;
+import static android.support.test.uiautomator.UiAutomator.takeScreenShot;
 
 /**
  * Comment the @Suppress to use this class.
@@ -30,5 +31,7 @@ public final class GmailAndroidTest {
 
         getDevice();
         openApp(AppSupported.GMAIL);
+
+        takeScreenShot(AppSupported.GMAIL, "my_first_screen_shot");
     }
 }

@@ -206,12 +206,16 @@ public class UiAutomator {
     //endregion - device actions
 
 
-    public static void takeScreenShot(final String title) {
+    public static void takeScreenShotGeneric(final String title) {
+        takeScreenShot(GenericConfig.APP, title);
+    }
+
+    public static void takeScreenShot(final AppSupported appSupported, final String title) {
         getInstrumentation().waitForIdleSync();
         sleep(500);
         final File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() +
-                "/app_spoon-screenshots/" + GenericConfig.APP_TO_TEST + "/");
-        getDevice().takeScreenshot(new File(getScreenFolder().getAbsolutePath(), title + ".png"), 1.0f, 100);
+                "/app_spoon-screenshots/" + appSupported.name + "/");
+        getDevice().takeScreenshot(new File(getScreenFolder(appSupported).getAbsolutePath(), title + ".png"), 1.0f, 100);
         getInstrumentation().waitForIdleSync();
     }
 
@@ -237,14 +241,19 @@ public class UiAutomator {
 
 
     @NonNull
-    private static File getScreenFolder() {
+    private static File getScreenFolderGeneric() {
+        return getScreenFolder(GenericConfig.APP);
+    }
+
+    @NonNull
+    private static File getScreenFolder(AppSupported appSupported) {
         File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() +
                 "/app_spoon-screenshots/");
         if (!folder.exists()) {
             folder.mkdir();
         }
         folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() +
-                "/app_spoon-screenshots/" + GenericConfig.APP_TO_TEST + "/");
+                "/app_spoon-screenshots/" + appSupported.name + "/");
         if (!folder.exists()) {
             folder.mkdir();
         }
