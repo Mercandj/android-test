@@ -19,6 +19,7 @@ import static android.support.test.uiautomator.UiAutomator.openApp;
 import static android.support.test.uiautomator.UiAutomator.pressBack;
 import static android.support.test.uiautomator.UiAutomator.pressHome;
 import static android.support.test.uiautomator.UiAutomator.sleep;
+import static android.support.test.uiautomator.UiAutomator.takeScreenShot;
 import static android.support.test.uiautomator.UiAutomatorClick.click;
 import static android.support.test.uiautomator.UiAutomatorClick.clickContainsText;
 import static android.support.test.uiautomator.UiAutomatorClick.clickTopRight;
@@ -47,7 +48,7 @@ public final class EdjingFreeLibraryAndroidTest {
         } else {
             //Waiting for ads display
             sleep(5_500);
-
+            takeScreenShot(AppSupported.EDJING_FREE, "Starting " + getCurrentDateString());
             //Go back to principal UI
             pressBack();
 
@@ -63,6 +64,7 @@ public final class EdjingFreeLibraryAndroidTest {
 
         if (findObjectContainsText("Local").exists()) {
             findObjectContainsText("Titres", "Tracks").click();
+            takeScreenShot(AppSupported.EDJING_FREE, "Tracks " + getCurrentDateString());
         }
         else {
             findObjectById("com.edjing.edjingdjturntable:id/library_frame").clickTopLeft();
@@ -71,6 +73,7 @@ public final class EdjingFreeLibraryAndroidTest {
 
         //Go to queue and delete items
         click("com.edjing.edjingdjturntable:id/queue_fab");
+        takeScreenShot(AppSupported.EDJING_FREE, "Queue " + getCurrentDateString());
         while (findObjectById("com.edjing.edjingdjturntable:id/row_current_list_delete_button").exists()) {
             click("com.edjing.edjingdjturntable:id/row_current_list_delete_button");
         }
@@ -78,6 +81,7 @@ public final class EdjingFreeLibraryAndroidTest {
 
         //Go to playlist and delete items
         clickWaitNewWindowContainsText("Playlists");
+        takeScreenShot(AppSupported.EDJING_FREE, "Playlist " + getCurrentDateString());
         while (findObjectById("com.edjing.edjingdjturntable:id/row_playlist_library").exists()) {
             click("com.edjing.edjingdjturntable:id/row_playlist_library_cover");
             clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_playlist_clipping_header"));
@@ -87,6 +91,7 @@ public final class EdjingFreeLibraryAndroidTest {
 
         //Go to mixes and delete items
         clickWaitNewWindowContainsText("Mixes");
+        takeScreenShot(AppSupported.EDJING_FREE, "Mixes " + getCurrentDateString());
         while (findObjectById("com.edjing.edjingdjturntable:id/row_mix_library").exists()) {
             findObjectById("com.edjing.edjingdjturntable:id/row_mix_library_overflow_button").clickTopLeft();
             clickWaitNewWindowContainsText("Edition");
@@ -103,6 +108,7 @@ public final class EdjingFreeLibraryAndroidTest {
         findObjectContainsText("Titres", "Tracks").click();
         //Add a track to the queue by clicking on a cover
         click("com.edjing.edjingdjturntable:id/row_track_library_cover");
+        takeScreenShot(AppSupported.EDJING_FREE, "Add to queue " + getCurrentDateString());
         sleep(1_500);
         if (findObjectContainsText("attente", "queue").exists()) {
             click("android:id/button1");
@@ -206,17 +212,20 @@ public final class EdjingFreeLibraryAndroidTest {
         click("android:id/button2");
         findObjectById("com.edjing.edjingdjturntable:id/dialog_edit_text_edit_text").setText("loulou " + getCurrentDateString());
         click("android:id/button1");
+        //Launch automix
         click("com.edjing.edjingdjturntable:id/automix_fab");
         //Waiting for ads
         sleep(2_500);
         pressBack();
-        if (findObjectContainsText("vous", "want?").exists()) {
+        if (findObjectContainsText("vous", "want").exists()) {
             click("android:id/button2");
         }
         sleep(5_000);
         //Quit automix
         pressBack();
-        click("android:id/button1");
+        if (findObjectContainsText("vous", "want").exists()) {
+            click("android:id/button1");
+        }
         //Start record
         click("com.edjing.edjingdjturntable:id/platine_top_menu_record_flash");
         click("com.edjing.edjingdjturntable:id/cover_deck_b");
@@ -245,18 +254,27 @@ public final class EdjingFreeLibraryAndroidTest {
         findObjectContainsText("Mes Mixes", "My Mixes").click();
         findObjectById("com.edjing.edjingdjturntable:id/row_mix_library_overflow_button").clickTopLeft();
         clickWaitNewWindowContainsText("Share link","Partager le lien");
-        clickWaitNewWindowContainsText("Gmail");
-        sleep(20_000);
-        if(findObjectContainsText("Annuler", "Cancel").exists()) {
-            clickWaitNewWindowContainsText("Annuler", "Cancel");
-            pressBack();
-            findObjectById("com.edjing.edjingdjturntable:id/row_mix_library_overflow_button").clickTopLeft();
-            clickWaitNewWindowContainsText("Share mp3", "Partager le mp3");
-            clickWaitNewWindowContainsText("Gmail");
-            findObjectById("com.google.android.gm:id/to").setText("adrien.larus@djit.fr");
-            click("com.google.android.gm:id/send");
+        if(findObjectContainsText("internet").exists()) {
+            click("android:id/button1");
         }
         else {
+            clickWaitNewWindowContainsText("Gmail");
+            sleep(20_000);
+
+            if (findObjectContainsText("Annuler", "Cancel").exists()) {
+                click("com.edjing.edjingdjturntable:id/dialog_cancel");
+                pressBack();
+                findObjectById("com.edjing.edjingdjturntable:id/row_mix_library_overflow_button").clickTopLeft();
+                clickWaitNewWindowContainsText("Share mp3", "Partager le mp3");
+                clickWaitNewWindowContainsText("Gmail");
+                sleep(20_000);
+                if (findObjectContainsText("Annuler", "Cancel").exists()) {
+                    click("com.edjing.edjingdjturntable:id/dialog_cancel");
+                    pressBack();
+                }
+                findObjectById("com.google.android.gm:id/to").setText("adrien.larus@djit.fr");
+                click("com.google.android.gm:id/send");
+            }
             findObjectById("com.google.android.gm:id/to").setText("adrien.larus@djit.fr");
             click("com.google.android.gm:id/send");
         }
@@ -269,18 +287,7 @@ public final class EdjingFreeLibraryAndroidTest {
             click("android:id/button2");
         }
 
-
-
-
-
-
-        //dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
-
-        //findObjectContainsText("News", "Actualités", "actu").click();
-
-
         //findObjectContainsText("com.edjing.edjingdjturntable:id/list_fast_scroll_list").swipeUp(100);
-
 
     }
 
