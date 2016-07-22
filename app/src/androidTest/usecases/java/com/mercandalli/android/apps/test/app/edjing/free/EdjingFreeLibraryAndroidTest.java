@@ -85,6 +85,15 @@ public final class EdjingFreeLibraryAndroidTest {
             click("android:id/button1");
         }
 
+        //Go to mixes and delete items
+        clickWaitNewWindowContainsText("Mixes");
+        while (findObjectById("com.edjing.edjingdjturntable:id/row_mix_library").exists()) {
+            findObjectById("com.edjing.edjingdjturntable:id/row_mix_library_overflow_button").clickTopLeft();
+            clickWaitNewWindowContainsText("Edition");
+            click("com.edjing.edjingdjturntable:id/deleteButton");
+            click("android:id/button1");
+        }
+
 
         //Go to tracks
 
@@ -151,19 +160,22 @@ public final class EdjingFreeLibraryAndroidTest {
         click("android:id/button1");
         pressBack();
 
-
+        //Go to albums tab
         clickWaitNewWindowContainsText("Albums");
         dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
         dragTopList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
         list = findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list");
         child = list.getChild(new UiSelector().index(list.getChildCount() - 2));
+        //Add an album to the queue by clicking on the contextual menu
         child.getChild(new UiSelector().resourceId("com.edjing.edjingdjturntable:id/row_album_library_cover")).click();
         clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_album_clipping_header"));
         findObjectContainsText("Ajouter toutes les tracks apparentes à la file d'attente", "Add all apparent tracks to the queue").click();
         click("com.edjing.edjingdjturntable:id/dialog_add_all_ok");
+        //Add an album to an existing playlist by clicking on the contextual menu
         clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_album_clipping_header"));
         findObjectContainsText("Ajouter à une playlist", "Add to playlist").click();
         click("android:id/button1");
+        //Add an album to a playlist by clicking on the contextual menu
         clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_album_clipping_header"));
         findObjectContainsText("Ajouter à une playlist", "Add to playlist").click();
         click("android:id/button2");
@@ -171,6 +183,7 @@ public final class EdjingFreeLibraryAndroidTest {
         click("android:id/button1");
         pressBack();
 
+        //Go to playlists tab
         clickWaitNewWindowContainsText("Playlists");
         list = findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list");
         child = list.getChild(new UiSelector().index(list.getChildCount() - 2));
@@ -185,7 +198,6 @@ public final class EdjingFreeLibraryAndroidTest {
         findObjectById("com.edjing.edjingdjturntable:id/dialog_edit_text_edit_text").setText("ririlerelou " + getCurrentDateString());
         click("android:id/button1");
         pressBack();
-
         click("com.edjing.edjingdjturntable:id/queue_fab");
         dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/view_current_setlist_list_view"));
         dragTopList(findObjectById("com.edjing.edjingdjturntable:id/view_current_setlist_list_view"));
@@ -198,6 +210,9 @@ public final class EdjingFreeLibraryAndroidTest {
         //Waiting for ads
         sleep(2_500);
         pressBack();
+        if (findObjectContainsText("vous", "want?").exists()) {
+            click("android:id/button2");
+        }
         sleep(5_000);
         //Quit automix
         pressBack();
@@ -209,11 +224,15 @@ public final class EdjingFreeLibraryAndroidTest {
         //Launch automix
         click("com.edjing.edjingdjturntable:id/automix_fab");
         sleep(120_000);
+        //Go back to the main UI
         pressBack();
         click("android:id/button1");
         //Waiting for ads
         sleep(2_500);
         pressBack();
+        if (findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?", "Do you really want to shut down the app?").exists()) {
+            click("android:id/button2");
+        }
         //Stop the record
         click("com.edjing.edjingdjturntable:id/platine_top_menu_record_flash");
         sleep(6_000);
@@ -222,9 +241,36 @@ public final class EdjingFreeLibraryAndroidTest {
         findObjectById("com.edjing.edjingdjturntable:id/mixTagsEditText").setText("ð/♦,☺ĳµ…}ù_~⌨ " + getCurrentDateString());
         click("com.edjing.edjingdjturntable:id/backButton");
         click("com.edjing.edjingdjturntable:id/cover_deck_a");
-
+        //Go to Mixes tab
         findObjectContainsText("Mes Mixes", "My Mixes").click();
-        dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
+        findObjectById("com.edjing.edjingdjturntable:id/row_mix_library_overflow_button").clickTopLeft();
+        clickWaitNewWindowContainsText("Share link","Partager le lien");
+        clickWaitNewWindowContainsText("Gmail");
+        sleep(20_000);
+        if(findObjectContainsText("Annuler", "Cancel").exists()) {
+            clickWaitNewWindowContainsText("Annuler", "Cancel");
+            pressBack();
+            findObjectById("com.edjing.edjingdjturntable:id/row_mix_library_overflow_button").clickTopLeft();
+            clickWaitNewWindowContainsText("Share mp3", "Partager le mp3");
+            clickWaitNewWindowContainsText("Gmail");
+            findObjectById("com.google.android.gm:id/to").setText("adrien.larus@djit.fr");
+            click("com.google.android.gm:id/send");
+        }
+        else {
+            findObjectById("com.google.android.gm:id/to").setText("adrien.larus@djit.fr");
+            click("com.google.android.gm:id/send");
+        }
+        //Go back to the main UI
+        findObjectById("com.edjing.edjingdjturntable:id/library_frame").clickTopLeft();
+        clickContainsText("Come back to the Deck view");
+        sleep(2_500);
+        pressBack();
+        if (findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?", "Do you really want to shut down the app?").exists()) {
+            click("android:id/button2");
+        }
+
+
+
 
 
 
