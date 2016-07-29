@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.mercandalli.android.apps.test.app.AppSupported;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
@@ -61,10 +62,16 @@ public final class EdjingFreeLibraryAndroidTest {
                 click("com.edjing.edjingdjturntable:id/btn_mix_right_now");
             }
         }
+        openApp(AppSupported.EDJING_FREE);
         sleep(5_500);
         Log.d(TAG, "returnToMainView: start");
+
+        //Activity currentActivity = Tests.getCurrentActivity();
+        //String activityName = currentActivity == null ? "null" : currentActivity.getLocalClassName();
+        //Log.d("debug_thursday_vb", "returnToMainView: " + activityName);
+
         while (!findObjectById("com.edjing.edjingdjturntable:id/settings_button_automix").exists()){
-            Log.d(TAG, "returnToMainView: pressback");
+            Log.d(TAG, "returnToMainView: AdsPressBack");
             if (findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?", "Do you really want to shut down the app?").exists()) {
                 Log.d(TAG, "returnToMainView: checkQuit");
                 click("android:id/button2");
@@ -74,7 +81,7 @@ public final class EdjingFreeLibraryAndroidTest {
             sleep(3_500);
         }
 
-        manageAds();
+        //manageAds();
     }
 
     private void manageAds() throws UiObjectNotFoundException {
@@ -91,35 +98,55 @@ public final class EdjingFreeLibraryAndroidTest {
         }
     }
 
+    @After
+    public void resetApp() throws UiObjectNotFoundException {
+
+        while (!findObjectById("com.edjing.edjingdjturntable:id/alertTitle").exists()) {
+            Log.d(TAG, "resetApp: pressback");
+            pressBack();
+            sleep(3_500);
+        }
+        click("android:id/button1");
+        pressBack();
+        if(findObjectById("com.edjing.edjingdjturntable:id/alertTitle").exists()){
+            Log.d(TAG, "resetApp: FromAutomix");
+            click("android:id/button1");
+        }
+
+    }
 
 
     @Test
     public void testEdjingFreeNoAds_02_GotoLib() throws UiObjectNotFoundException {
 
-        Log.d(TAG, "gotoLib");
         //Go to library
         click("com.edjing.edjingdjturntable:id/platine_menu_bottom_play_button_deckA");
-
+        Log.d(TAG, "testEdjingFreeNoAds_02_GotoLib: IntoLib");
 
     }
 
     @Test
     public void testEdjingFreeNoAds_03_GotoLocal() throws UiObjectNotFoundException {
 
-        Log.d(TAG, "gotoLocal");
         gotoLocal();
         takeScreenShot(AppSupported.EDJING_FREE, "Tracks " + getCurrentDateString());
+        Log.d(TAG, "testEdjingFreeNoAds_03_GotoLocal: IntoLocal");
     }
 
     private void gotoLocal()throws UiObjectNotFoundException {
-        click("com.edjing.edjingdjturntable:id/platine_menu_bottom_play_button_deckA");
+        if (findObjectById("com.edjing.edjingdjturntable:id/vinyl_view_disc").exists()){
+            click("com.edjing.edjingdjturntable:id/platine_menu_top_cover_deckA");
+            Log.d(TAG, "gotoLocal: clickHasBeenDoneOnLibCoverA");
+        }else{
+            click("com.edjing.edjingdjturntable:id/platine_menu_bottom_play_button_deckA");
+            Log.d(TAG, "gotoLocal: clickHasBeenDoneOnPlayA");
+        }
         sleep(1_500);
-        Log.d(TAG, "clickDeckA");
 
         //Go to Local
 
         if (findObjectContainsText("Local").exists()) {
-            findObjectContainsText("Titres", "Tracks").click();
+            findObjectById("com.edjing.edjingdjturntable:id/fragment_music_source_pager_tabs").clickTopLeft();
         } else {
             findObjectById("com.edjing.edjingdjturntable:id/library_frame").clickTopLeft();
             clickContainsText("Local");
@@ -127,63 +154,107 @@ public final class EdjingFreeLibraryAndroidTest {
     }
 
     @Test
-    public void testEdjingFreeNoAds_04_DeleteQueue() throws UiObjectNotFoundException {
+    public void testEdjingFreeNoAds_04_LoadTrack() throws UiObjectNotFoundException {
 
         gotoLocal();
-        Log.d(TAG, "deleteQueue");
-        //Go to queue and delete items
-        click("com.edjing.edjingdjturntable:id/queue_fab");
-        takeScreenShot(AppSupported.EDJING_FREE, "Queue " + getCurrentDateString());
+        loadTrackA();
+    }
+
+    private void loadTrackA () throws UiObjectNotFoundException{
+        findObjectById("com.edjing.edjingdjturntable:id/row_track_library_title").click();
+        sleep(2_500);
+        takeScreenShot(AppSupported.EDJING_FREE,"TrackLoaded" + getCurrentDateString());
+        findObjectById("com.edjing.edjingdjturntable:id/platine_menu_bottom_play_button_deckA").click();
+        Log.d(TAG, "loadTrack: TrackIsPlaying");
+        takeScreenShot(AppSupported.EDJING_FREE,"TrackIsPlaying" + getCurrentDateString());
+    }
+
+    @Test
+    public void testEdjingFreeNoAds_05_DeleteQueue() throws UiObjectNotFoundException {
+
+        gotoLocal();
+        gotoQueue();
+        deleteQueueItems();
+    }
+
+    private void deleteQueueItems()throws UiObjectNotFoundException{
+
         while (findObjectById("com.edjing.edjingdjturntable:id/row_current_list_delete_button").exists()) {
             click("com.edjing.edjingdjturntable:id/row_current_list_delete_button");
+            Log.d(TAG, "testEdjingFreeNoAds_05_DeleteQueue: TrackIntoQueueDeleted");
         }
+        Log.d(TAG, "testEdjingFreeNoAds_05_DeleteQueue: QueueEmpty");
+        takeScreenShot(AppSupported.EDJING_FREE,"QueueEmpty");
     }
 
     @Test
-    public void testEdjingFreeNoAds_05_DeletePlaylist() throws UiObjectNotFoundException {
+    public void testEdjingFreeNoAds_06_DeletePlaylist() throws UiObjectNotFoundException {
 
         gotoLocal();
-        Log.d(TAG, "deletePlaylist");
+        gotoPlaylistsList();
 
-        //Go to playlist and delete items
-        clickWaitNewWindowContainsText("Playlists");
-        takeScreenShot(AppSupported.EDJING_FREE, "Playlist " + getCurrentDateString());
         while (findObjectById("com.edjing.edjingdjturntable:id/row_playlist_library").exists()) {
-            click("com.edjing.edjingdjturntable:id/row_playlist_library_cover");
-            clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_playlist_clipping_header"));
-            clickWaitNewWindowContainsText("Delete", "Supprimer");
-            click("android:id/button1");
+            gotoPlaylist();
+            clickOnContxtMenuPlaylist();
+            deletePlaylist();
         }
+        Log.d(TAG, "testEdjingFreeNoAds_06_DeletePlaylist: PlaylistListEmpty");
+        takeScreenShot(AppSupported.EDJING_FREE,"PlaylistListEmpty"+getCurrentDateString());
     }
+
+    private void gotoPlaylist()throws UiObjectNotFoundException{
+        click("com.edjing.edjingdjturntable:id/row_playlist_library_cover");
+        Log.d(TAG, "gotoPlaylist: PlaylistView");
+        takeScreenShot(AppSupported.EDJING_FREE,"Playlist "+getCurrentDateString());
+    }
+
+    private void deletePlaylist()throws UiObjectNotFoundException{
+        clickWaitNewWindowContainsText("Delete", "Supprimer");
+        click("android:id/button1");
+        Log.d(TAG, "deletePlaylist: PlaylistDeleted");
+        takeScreenShot(AppSupported.EDJING_FREE,"PlaylistDeleted "+getCurrentDateString());
+    }
+
     @Test
-    public void testEdjingFreeNoAds_06_DeleteMixes() throws UiObjectNotFoundException {
+    public void testEdjingFreeNoAds_07_DeleteMixes() throws UiObjectNotFoundException {
 
         gotoLocal();
-        Log.d(TAG, "deleteMixes");
+        gotoMixes();
 
-        //Go to mixes and delete items
+        while (findObjectById("com.edjing.edjingdjturntable:id/row_mix_library").exists()) {
+            clickOnContxtMenuMix();
+            deleteMixes();
+        }
+        takeScreenShot(AppSupported.EDJING_FREE, "emptyMixes " + getCurrentDateString());
+        Log.d(TAG, "testEdjingFreeNoAds_07_DeleteMixes: emptyMixList");
+    }
+
+    private void gotoMixes ()throws UiObjectNotFoundException{
         clickWaitNewWindowContainsText("Mixes");
         takeScreenShot(AppSupported.EDJING_FREE, "Mixes " + getCurrentDateString());
-        while (findObjectById("com.edjing.edjingdjturntable:id/row_mix_library").exists()) {
-            findObjectById("com.edjing.edjingdjturntable:id/row_mix_library_overflow_button").clickTopLeft();
-            clickWaitNewWindowContainsText("Edition","Édition");
-            click("com.edjing.edjingdjturntable:id/deleteButton");
-            click("android:id/button1");
-        }
+        Log.d(TAG, "gotoMixes: MixList");
     }
-
-
+    private void clickOnContxtMenuMix()throws UiObjectNotFoundException{
+        findObjectById("com.edjing.edjingdjturntable:id/row_mix_library_overflow_button").clickTopLeft();
+        takeScreenShot(AppSupported.EDJING_FREE, "ContextualMenu " + getCurrentDateString());
+    }
+    private void deleteMixes ()throws UiObjectNotFoundException{
+        clickWaitNewWindowContainsText("Edition","Édition");
+        click("com.edjing.edjingdjturntable:id/deleteButton");
+        click("android:id/button1");
+        Log.d(TAG, "deleteMixes: MixDeleted");
+    }
     @Test
     public void testEdjingFreeNoAds_08_AddTracktoQueuefromCover() throws UiObjectNotFoundException {
 
 
         gotoLocal();
-        Log.d(TAG, "addTrackToQueueFromCover");
 
         //Add a track to the queue by clicking on a cover
         click("com.edjing.edjingdjturntable:id/row_track_library_cover");
         takeScreenShot(AppSupported.EDJING_FREE, "Add to queue " + getCurrentDateString());
         sleep(1_500);
+        Log.d(TAG, "testEdjingFreeNoAds_08_AddTracktoQueuefromCover: TrackAddedToQueue");
         if (findObjectContainsText("attente", "queue").exists()) {
             click("android:id/button1");
         }
@@ -193,11 +264,13 @@ public final class EdjingFreeLibraryAndroidTest {
     public void testEdjingFreeNoAds_09_AddTracktoQueuefromMultiselectionMenu() throws UiObjectNotFoundException {
 
         gotoLocal();
-        Log.d(TAG, "addTracktoQueuefromMultiselectionMenu");
+        moveIntoList();
 
-        dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
+
+        takeScreenShot(AppSupported.EDJING_FREE,"MultiSelection");
         //Add a track to the queue by clicking on the multiselection tick
         click("com.edjing.edjingdjturntable:id/row_track_library_overflow_button");
+        Log.d(TAG, "testEdjingFreeNoAds_09_AddTracktoQueuefromMultiselectionMenu: ClickOnContextualMenu");
         click("com.edjing.edjingdjturntable:id/dialog_add_all_ok");
         takeScreenShot(AppSupported.EDJING_FREE, "Add to queue " + getCurrentDateString());
     }
@@ -206,158 +279,203 @@ public final class EdjingFreeLibraryAndroidTest {
     public void testEdjingFreeNoAds_10_AddTracktoQueuefromContextualMenu() throws UiObjectNotFoundException {
 
         gotoLocal();
-        Log.d(TAG, "addTrackToQueueFromContextualMenu");
+        moveIntoList();
 
         UiObject list;
         UiObject child;
 
-        dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
+
+
         if (findObjectById("com.edjing.edjingdjturntable:id/selection_toolbar_nb_selected_items").exists()){
+            Log.d(TAG, "testEdjingFreeNoAds_10_AddTracktoQueuefromContextualMenu: ToolbarExists");
             pressBack();
         }
         //Add a track to the queue by clicking on the contextual menu
         list = findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list");
         child = list.getChild(new UiSelector().index(list.getChildCount() - 2));
         child.getChild(new UiSelector().resourceId("com.edjing.edjingdjturntable:id/row_track_library_overflow_button")).clickTopLeft();
-        Log.d(TAG, "clickOnContextualMenu");
+        Log.d(TAG, "testEdjingFreeNoAds_10_AddTracktoQueuefromContextualMenu: clickOnContextualMenu");
         sleep(1_500);
         findObjectContainsText("attente", "Add to the queue").click();
         if (findObjectContainsText("attente", "queue").exists()) {
             click("android:id/button2");
         }
+        Log.d(TAG, "testEdjingFreeNoAds_10_AddTracktoQueuefromContextualMenu: TrackAddedToQueue");
     }
 
     @Test
     public void testEdjingFreeNoAds_11_AddTracktoPlaylistfromContextualMenu() throws UiObjectNotFoundException {
 
         gotoLocal();
-        Log.d(TAG, "addTrackToPlaylistFromContextualMenu");
+        moveIntoList();
 
-        UiObject list;
-        UiObject child;
-
-        dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
-        dragTopList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
         if (findObjectById("com.edjing.edjingdjturntable:id/selection_toolbar_nb_selected_items").exists()){
             pressBack();
         }
-        //Add a track to a playlist by clicking on the contextual menu
+        clickOnContxtMenuTrack();
+        addToPlaylistFroContxtMenu();
+        createNewPlaylistRiri();
+
+    }
+
+    private void createNewPlaylistRiri()throws UiObjectNotFoundException{
+        click("android:id/button2");
+        Log.d(TAG, "createNewPlaylistRiri: CreateButtonClicked");
+        findObjectById("com.edjing.edjingdjturntable:id/dialog_edit_text_edit_text").setText("riri " + getCurrentDateString());
+        click("android:id/button1");
+        Log.d(TAG, "createNewPlaylistRiri: Created");
+    }
+    private void clickOnContxtMenuTrack()throws UiObjectNotFoundException{
+        UiObject list;
+        UiObject child;
         list = findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list");
         child = list.getChild(new UiSelector().index(list.getChildCount() - 3));
         child.getChild(new UiSelector().resourceId("com.edjing.edjingdjturntable:id/row_track_library_overflow_button")).clickTopLeft();
-        Log.d(TAG, "clickOnContextualMenu");
+        Log.d(TAG, "clickOnContxtMenuTrack: ClickOnContextualMenu");
         sleep(1_500);
-        findObjectContainsText("Ajouter à une playlist","Add to a playlist").click();
-
-        //Create playlist
-        click("android:id/button2");
-        findObjectById("com.edjing.edjingdjturntable:id/dialog_edit_text_edit_text").setText("riri " + getCurrentDateString());
-        click("android:id/button1");
     }
     @Test
-    public void testEdjingFreeNoAds_13_GotoArtists() throws UiObjectNotFoundException {
+    public void testEdjingFreeNoAds_12_GotoArtists() throws UiObjectNotFoundException {
 
         gotoLocal();
+        gotoArtists();
 
-        //Go to artist tab
+    }
+
+    private void gotoArtists()throws UiObjectNotFoundException{
         findObjectContainsText("Artistes", "Artists").click();
-
+        Log.d(TAG, "gotoArtists: ArtistTab");
     }
     @Test
-    public void testEdjingFreeNoAds_14_AddArtisttoQueue() throws UiObjectNotFoundException {
+    public void testEdjingFreeNoAds_13_AddArtistToQueue() throws UiObjectNotFoundException {
 
         gotoLocal();
+        gotoArtists();
+        moveIntoList();
+        gotoArtistView();
+        clickOnContxtMenuArtist();
+        addToQueueFromContxtMenu();
+        pressBack();
+
+    }
+
+    private void gotoArtistView ()throws UiObjectNotFoundException{
         UiObject list;
         UiObject child;
-
-        //Add an artist to the queue
-        findObjectContainsText("Artistes", "Artists").click();
-        dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
-        dragTopList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
         list = findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list");
         child = list.getChild(new UiSelector().index(list.getChildCount() - 2));
         child.getChild(new UiSelector().resourceId("com.edjing.edjingdjturntable:id/row_artist_library_cover")).click();
+        Log.d(TAG, "gotoArtistView: ArtistView");
+        takeScreenShot(AppSupported.EDJING_FREE,"ArtistView " +getCurrentDateString());
+    }
+
+    private void clickOnContxtMenuArtist()throws UiObjectNotFoundException{
         clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_artist_clipping_header"));
+        Log.d(TAG, "clickOnContxtMenuArtist: ContextualMenuAppears");
+        takeScreenShot(AppSupported.EDJING_FREE,"ContextualView "+getCurrentDateString());
+    }
+
+    private void addToQueueFromContxtMenu()throws UiObjectNotFoundException{
         findObjectContainsText("file d'attente", "Add all apparent tracks to the queue").click();
         click("com.edjing.edjingdjturntable:id/dialog_add_all_ok");
-        pressBack();
-
     }
 
     @Test
-    public void testEdjingFreeNoAds_15_AddanArtisttoaPlaylist() throws UiObjectNotFoundException {
+    public void testEdjingFreeNoAds_14_AddArtistToPlaylist() throws UiObjectNotFoundException {
 
         gotoLocal();
-        UiObject list;
-        UiObject child;
+        gotoArtists();
+        gotoArtistView();
+        clickOnContxtMenuArtist();
+        addArtistToPlaylist();
+    }
 
-        //Add an artist to a playlist
-        findObjectContainsText("Artistes", "Artists").click();
-        list = findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list");
-        child = list.getChild(new UiSelector().index(list.getChildCount() - 2));
-        child.getChild(new UiSelector().resourceId("com.edjing.edjingdjturntable:id/row_artist_library_cover")).click();
-        clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_artist_clipping_header"));
+    private void addArtistToPlaylist()throws UiObjectNotFoundException{
         findObjectContainsText("Ajouter à une playlist","Add to playlist").click();
+        Log.d(TAG, "addArtistToPlaylist: AddARtistToPlaylist");
+        takeScreenShot(AppSupported.EDJING_FREE,"AddArtistToPlaylist "+getCurrentDateString());
         sleep(1_500);
         click("android:id/button1");
         pressBack();
-
     }
 
     @Test
-    public void testEdjingFreeNoAds_16_GotoAlbums() throws UiObjectNotFoundException {
+    public void testEdjingFreeNoAds_15_GotoAlbums() throws UiObjectNotFoundException {
 
         gotoLocal();
+        gotoAlbumsList();
 
-        //Go to albums tab
+    }
+
+    private void gotoAlbumsList () throws UiObjectNotFoundException{
         clickWaitNewWindowContainsText("Albums");
     }
 
     @Test
-    public void testEdjingFreeNoAds_17_AddAlbumToQueue() throws UiObjectNotFoundException {
+    public void testEdjingFreeNoAds_16_AddAlbumToQueue() throws UiObjectNotFoundException {
 
         gotoLocal();
-        insideAlbum();
-
-        //Add an album to the queue by clicking on the contextual menu
-        clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_album_clipping_header"));
-        findObjectContainsText("file d'attente", "to the queue").click();
-        click("com.edjing.edjingdjturntable:id/dialog_add_all_ok");
-        pressBack();
-
+        gotoAlbumsList();
+        moveIntoList();
+        gotoAlbumView();
+        clickOnContxtMenuAlbum();
+        addAlbumToQueue();
     }
 
+    private void moveIntoList()throws UiObjectNotFoundException{
+        dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
+        Log.d(TAG, "moveIntoList: dragBottom");
+        dragTopList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
+        Log.d(TAG, "moveIntoList: dragTop");
+    }
 
-    private void insideAlbum () throws UiObjectNotFoundException {
+    private void gotoAlbumView () throws UiObjectNotFoundException {
         UiObject list;
         UiObject child;
-        clickWaitNewWindowContainsText("Albums");
-        dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
-        dragTopList(findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll"));
         list = findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list");
         child = list.getChild(new UiSelector().index(list.getChildCount() - 2));
         child.getChild(new UiSelector().resourceId("com.edjing.edjingdjturntable:id/row_album_library_cover")).click();
+        Log.d(TAG, "gotoAlbumView: AlbumClicked");
+    }
+    private void clickOnContxtMenuAlbum()throws UiObjectNotFoundException{
+        clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_album_clipping_header"));
     }
 
+    private void addAlbumToQueue()throws UiObjectNotFoundException{
+        Log.d(TAG, "addAlbumToQueue: addAlbumToQueue");
+        findObjectContainsText("file d'attente", "to the queue").click();
+        takeScreenShot(AppSupported.EDJING_FREE,"addAlbumToQueue "+getCurrentDateString());
+        click("com.edjing.edjingdjturntable:id/dialog_add_all_ok");
+        pressBack();
+    }
+
+
+    @Test
+    public void testEdjingFreeNoAds_17_AddAlbumToExistingPlaylistFromContextualMenu() throws UiObjectNotFoundException {
+
+        gotoLocal();
+        gotoAlbumsList();
+        gotoAlbumView();
+        clickOnContxtMenuAlbum();
+        addAlbumToPlaylist();
+
+    }
+
+
+    private void addAlbumToPlaylist ()throws UiObjectNotFoundException{
+        findObjectContainsText("Ajouter à une playlist","Add to playlist").click();
+        Log.d(TAG, "addAlbumToPlaylist: ClickOnExistingPlaylist");
+        takeScreenShot(AppSupported.EDJING_FREE,"ClickOnExistingPlaylist "+getCurrentDateString());
+        click("android:id/button1");
+        pressBack();
+    }
 
     @Test
     public void testEdjingFreeNoAds_18_AddAlbumToExistingPlaylistFromContextualMenu() throws UiObjectNotFoundException {
 
         gotoLocal();
-        insideAlbum();
-
-        //Add an album to an existing playlist by clicking on the contextual menu
-        clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_album_clipping_header"));
-        findObjectContainsText("Ajouter à une playlist","Add to a playlist").click();
-        click("android:id/button1");
-        pressBack();
-    }
-
-    @Test
-    public void testEdjingFreeNoAds_19_AddAlbumToExistingPlaylistFromContextualMenu() throws UiObjectNotFoundException {
-
-        gotoLocal();
-        insideAlbum();
+        gotoAlbumsList();
+        gotoAlbumView();
 
         //Add an album to a playlist by clicking on the contextual menu
         clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_album_clipping_header"));
@@ -370,32 +488,35 @@ public final class EdjingFreeLibraryAndroidTest {
     }
 
     @Test
-    public void testEdjingFreeNoAds_20_GotoPlaylist() throws UiObjectNotFoundException {
+    public void testEdjingFreeNoAds_19_GotoPlaylist() throws UiObjectNotFoundException {
 
-
-        //Go to playlists tab
-        clickWaitNewWindowContainsText("Playlists");
+        gotoLocal();
+        gotoPlaylistsList();
 
     }
 
-    @Test
-    public void testEdjingFreeNoAds_21_AddaPlaylistToQueue() throws UiObjectNotFoundException {
+    private void gotoPlaylistsList ()throws UiObjectNotFoundException{
+        clickWaitNewWindowContainsText("Playlists");
+        takeScreenShot(AppSupported.EDJING_FREE, "Playlist " + getCurrentDateString());
+    }
 
-        UiObject list;
-        UiObject child;
+    @Test
+    public void testEdjingFreeNoAds_20_AddaPlaylistToQueue() throws UiObjectNotFoundException {
+
         gotoLocal();
-        insidePlaylist();
+        gotoPlaylistsList();
+        gotoPlaylistView();
 
         clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_playlist_clipping_header"));
         findObjectContainsText("file d'attente", "Add all apparent tracks to the queue").click();
         click("com.edjing.edjingdjturntable:id/dialog_add_all_ok");
+        pressBack();
     }
 
-    private void insidePlaylist () throws UiObjectNotFoundException{
+    private void gotoPlaylistView() throws UiObjectNotFoundException{
         UiObject list;
         UiObject child;
 
-        clickWaitNewWindowContainsText("Playlists");
         list = findObjectById("com.edjing.edjingdjturntable:id/list_fast_scroll_list");
         child = list.getChild(new UiSelector().index(list.getChildCount() - 2));
         child.getChild(new UiSelector().resourceId("com.edjing.edjingdjturntable:id/row_playlist_library_cover")).click();
@@ -403,12 +524,13 @@ public final class EdjingFreeLibraryAndroidTest {
 
 
     @Test
-    public void testEdjingFreeNoAds_22_EditaPlaylist() throws UiObjectNotFoundException {
+    public void testEdjingFreeNoAds_21_EditPlaylist() throws UiObjectNotFoundException {
 
-        clickWaitNewWindowContainsText("Playlists");
+        gotoLocal();
+        gotoPlaylist();
         click("com.edjing.edjingdjturntable:id/row_playlist_library_cover");
         clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_playlist_clipping_header"));
-        findObjectContainsText("Rennomer", "Edit").click();
+        findObjectContainsText("Modifier", "Edit").click();
         findObjectById("com.edjing.edjingdjturntable:id/dialog_edit_text_edit_text").setText("ririlerelou " + getCurrentDateString());
         click("android:id/button1");
         pressBack();
@@ -416,136 +538,157 @@ public final class EdjingFreeLibraryAndroidTest {
     }
 
     @Test
-    public void testEdjingFreeNoAds_23_GotoQueue() throws UiObjectNotFoundException {
+    public void testEdjingFreeNoAds_22_GotoQueue() throws UiObjectNotFoundException {
 
         gotoLocal();
-        click("com.edjing.edjingdjturntable:id/queue_fab");
+        gotoQueue();
 
     }
 
     @Test
-    public void testEdjingFreeNoAds_24_AddQueuetoaNewPlaylist() throws UiObjectNotFoundException {
-
+    public void testEdjingFreeNoAds_23_AddQueueToNewPlaylist() throws UiObjectNotFoundException {
 
         gotoLocal();
+        gotoQueue();
+        moveIntoPlaylistList();
+        clickOnContxtMenuPlaylist();
+        addToPlaylistFroContxtMenu();
+        createNewPlaylistLoulou();
+
+    }
+    private void gotoQueue () throws UiObjectNotFoundException {
         click("com.edjing.edjingdjturntable:id/queue_fab");
+        takeScreenShot(AppSupported.EDJING_FREE,"QueueView " + getCurrentDateString());
+        Log.d(TAG, "gotoQueue: QueueView");
+    }
+
+    private void moveIntoPlaylistList () throws UiObjectNotFoundException {
         dragBottomList(findObjectById("com.edjing.edjingdjturntable:id/view_current_setlist_list_view"));
         dragTopList(findObjectById("com.edjing.edjingdjturntable:id/view_current_setlist_list_view"));
-        clickTopRight(findObjectById("android:id/content"));
+    }
+    private void clickOnContxtMenuPlaylist () throws UiObjectNotFoundException {
+        clickTopRight(findObjectById("com.edjing.edjingdjturntable:id/activity_playlist_clipping_header"));
+
+    }
+    private void addToPlaylistFroContxtMenu()throws UiObjectNotFoundException {
         findObjectContainsText("playlist").click();
+    }
+    private void createNewPlaylistLoulou ()throws UiObjectNotFoundException {
         click("android:id/button2");
         findObjectById("com.edjing.edjingdjturntable:id/dialog_edit_text_edit_text").setText("loulou " + getCurrentDateString());
         click("android:id/button1");
 
     }
 
+
+    @Test
+    public void testEdjingFreeNoAds_24_StartRec() throws UiObjectNotFoundException {
+
+        gotoLocal();
+        loadTrackA();
+        startRec();
+    }
+
+    private void startRec()throws UiObjectNotFoundException{
+
+        sleep(2_500);
+        takeScreenShot(AppSupported.EDJING_FREE,"ReadyToRec");
+        Log.d(TAG, "startRec: ReadyToRec");
+        click("com.edjing.edjingdjturntable:id/platine_top_menu_record_flash");
+        sleep(2_500);
+        takeScreenShot(AppSupported.EDJING_FREE,"Recording");
+        Log.d(TAG, "startRec: Recording");
+    }
+
     @Test
     public void testEdjingFreeNoAds_25_LaunchAutomix() throws UiObjectNotFoundException {
 
         gotoLocal();
-        //Launch automix
-        click("com.edjing.edjingdjturntable:id/automix_fab");
+        gotoQueue();
+        gotoAutomixFromQueue();
 
-    }
 
-    @Test
-    public void testEdjingFreeNoAds_26_WaitForAds() throws UiObjectNotFoundException {
-
-        gotoLocal();
-        //Launch automix
-        click("com.edjing.edjingdjturntable:id/automix_fab");
         //Waiting for ads
         sleep(2_500);
-        pressBack();
-        if (findObjectContainsText("vous", "want").exists()) {
-            sleep(1_500);
-            click("android:id/button2");
+        takeScreenShot(AppSupported.EDJING_FREE,"AutomixAds" + getCurrentDateString());
+
+
+        while (!findObjectById("com.edjing.edjingdjturntable:id/alertTitle").exists()) {
+            pressBack();
+            sleep(3_500);
         }
-        sleep(5_000);
+        if(findObjectById("com.edjing.edjingdjturntable:id/alertTitle").exists()) {
+            sleep(3_500);
+            click("android:id/button2");
+            sleep(1_500);
+        }
 
-    }
+        takeScreenShot(AppSupported.EDJING_FREE,"AutomixRun" + getCurrentDateString());
+        Log.d(TAG, "testEdjingFreeNoAds_25_LaunchAutomix: AutomixRun");
+        sleep(120_000);
+        Log.d(TAG, "testEdjingFreeNoAds_25_LaunchAutomix: AutomixHasBeenPlayed2Min");
 
-    @Test
-    public void testEdjingFreeNoAds_27_QuitAutomix() throws UiObjectNotFoundException {
-
-        //Quit automix
-        pressBack();
-        if (findObjectContainsText("vous", "want").exists()) {
+        while (!findObjectContainsText("vous", "want").exists()) {
+            pressBack();
+            Log.d(TAG, "testEdjingFreeNoAds_25_LaunchAutomix: QuitAutomix");
+            sleep(3_500);
+        }
+        if(findObjectContainsText("vous", "want").exists()) {
             sleep(1_500);
             click("android:id/button1");
             sleep(1_500);
         }
 
+        takeScreenShot(AppSupported.EDJING_FREE,"AutomixEnded" + getCurrentDateString());
     }
-
-    @Test
-    public void testEdjingFreeNoAds_28_StartRec() throws UiObjectNotFoundException {
-
-        //Start record
-        click("com.edjing.edjingdjturntable:id/platine_top_menu_record_flash");
-    }
-
-    @Test
-    public void testEdjingFreeNoAds_29_LaunchAutomix() throws UiObjectNotFoundException {
-
-        //Launch automix
-        click("com.edjing.edjingdjturntable:id/cover_deck_b");
-        click("com.edjing.edjingdjturntable:id/queue_fab");
+    private void gotoAutomixFromQueue()throws UiObjectNotFoundException{
         click("com.edjing.edjingdjturntable:id/automix_fab");
-        sleep(120_000);
     }
 
+
+
+
     @Test
-    public void testEdjingFreeNoAds_30_GoBacktotheMainUI() throws UiObjectNotFoundException {
+    public void testEdjingFreeNoAds_26_StopRecord() throws UiObjectNotFoundException {
 
+        stopRecord();
 
-        //Go back to the main UI
-        pressBack();
-        click("android:id/button1");
 
     }
-
-    @Test
-    public void testEdjingFreeNoAds_31_WaitForAds() throws UiObjectNotFoundException {
-
-
-        //Waiting for ads
-        sleep(2_500);
-        pressBack();
-        if (findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?", "Do you really want to shut down the app?").exists()) {
-            click("android:id/button2");
-        }
-    }
-
-    @Test
-    public void testEdjingFreeNoAds_32_StopRecord() throws UiObjectNotFoundException {
-
-        //Stop the record
+    private void stopRecord () throws UiObjectNotFoundException{
         click("com.edjing.edjingdjturntable:id/platine_top_menu_record_flash");
-        sleep(6_000);
+        while (!findObjectById("com.edjing.edjingdjturntable:id/mixTitleEditText").exists()) {
+            sleep(10_000);
+            Log.d(TAG, "stopRecord: WaitingForAfterRecordPanel");
+        }
+        takeScreenShot(AppSupported.EDJING_FREE,"AfterRecordAppears" + getCurrentDateString());
+        Log.d(TAG, "stopRecord: AfterRecordAppears");
         findObjectById("com.edjing.edjingdjturntable:id/mixTitleEditText").setText("ð/ĳµ…}ù_~⌨ " + getCurrentDateString());
         findObjectById("com.edjing.edjingdjturntable:id/mixArtistNameEditText").setText("ð/ẞĳµ…}ù_~⌨ " + getCurrentDateString());
         findObjectById("com.edjing.edjingdjturntable:id/mixTagsEditText").setText("ð/♦,☺ĳµ…}ù_~⌨ " + getCurrentDateString());
+        takeScreenShot(AppSupported.EDJING_FREE,"AfterRecordEdition" + getCurrentDateString());
         click("com.edjing.edjingdjturntable:id/backButton");
-
+        Log.d(TAG, "stopRecord: RecordDone "+getCurrentDateString());
     }
 
     @Test
-    public void testEdjingFreeNoAds_33_GotoMixes() throws UiObjectNotFoundException {
+    public void testEdjingFreeNoAds_27_GotoMixes() throws UiObjectNotFoundException {
 
         //Go to Mixes tab
-        click("com.edjing.edjingdjturntable:id/cover_deck_a");
+        gotoLocal();
         findObjectContainsText("Mixes").click();
 
     }
 
     @Test
-    public void testEdjingFreeNoAds_34_ShareMixLink() throws UiObjectNotFoundException {
+    public void testEdjingFreeNoAds_28_ShareMixLink() throws UiObjectNotFoundException {
 
-
+        gotoLocal();
+        findObjectContainsText("Mixes").click();
         findObjectById("com.edjing.edjingdjturntable:id/row_mix_library_overflow_button").clickTopLeft();
         clickWaitNewWindowContainsText("Share link", "Partager le lien");
         if (findObjectContainsText("internet").exists()) {
+            Log.d(TAG, "testEdjingFreeNoAds_28_ShareMixLink: NoInternet");
             click("android:id/button1");
         } else {
             clickWaitNewWindowContainsText("Gmail");
@@ -564,40 +707,36 @@ public final class EdjingFreeLibraryAndroidTest {
     }
 
     @Test
-    public void testEdjingFreeNoAds_35_ShareMixMp3() throws UiObjectNotFoundException {
+    public void testEdjingFreeNoAds_29_ShareMixMp3() throws UiObjectNotFoundException {
 
-            findObjectById("com.edjing.edjingdjturntable:id/row_mix_library_overflow_button").clickTopLeft();
-            clickWaitNewWindowContainsText("Share mp3", "Partager le mp3");
-            if (findObjectContainsText("internet").exists()) {
-                click("android:id/button1");
-            } else {
-                clickWaitNewWindowContainsText("Gmail");
-                sleep(30_000);
+        click("com.edjing.edjingdjturntable:id/cover_deck_a");
+        findObjectContainsText("Mixes").click();
+        findObjectById("com.edjing.edjingdjturntable:id/row_mix_library_overflow_button").clickTopLeft();
+        clickWaitNewWindowContainsText("Share mp3", "Partager le mp3");
+        if (findObjectContainsText("internet").exists()) {
+            click("android:id/button1");
+        } else {
+            clickWaitNewWindowContainsText("Gmail");
+            sleep(30_000);
 
-                if (findObjectById("com.google.android.gm:id/to").exists()) {
-                    findObjectById("com.google.android.gm:id/to").setText("adrien.larus@djit.fr");
-                    click("com.google.android.gm:id/send");
-                }
-                click("com.edjing.edjingdjturntable:id/dialog_cancel");
-                pressBack();
+            if (findObjectById("com.google.android.gm:id/to").exists()) {
+                findObjectById("com.google.android.gm:id/to").setText("adrien.larus@djit.fr");
+                click("com.google.android.gm:id/send");
+            }
+            click("com.edjing.edjingdjturntable:id/dialog_cancel");
+            pressBack();
 
-                }
-        }
+            }
+    }
     @Test
-    public void testEdjingFreeNoAds_36_GotoMainUI() throws UiObjectNotFoundException {
+    public void testEdjingFreeNoAds_30_GotoMainUI() throws UiObjectNotFoundException {
 
-        //Go back to the main UI
-        findObjectById("com.edjing.edjingdjturntable:id/library_frame").clickTopLeft();
-        clickContainsText("Come back to the Deck view","platines");
-        sleep(2_500);
-        pressBack();
-        if (findObjectContainsText("Êtes-vous sur de vouloir quitter l'application?", "Do you really want to shut down the app?").exists()) {
-            click("android:id/button2");
+
         }
 
         //findObjectContainsText("com.edjing.edjingdjturntable:id/list_fast_scroll_list").swipeUp(100);
 
-    }
+
 
 
     private void quitEdjingStore() {
