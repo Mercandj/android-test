@@ -21,9 +21,10 @@ import static android.support.test.uiautomator.UiAutomatorFind.findObjectById;
  */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public final class EdjingFreeRecordTest {
+public final class EdjingFreeRecordTest extends EdjingFreeAndroidTest  {
 
     private static final String TAG = "EdjingFreeRecordTest";
+
 
     @Test
     public void testEdjingFreeNoAds_Record() throws UiObjectNotFoundException {

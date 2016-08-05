@@ -45,7 +45,7 @@ public final class EdjingFreeHelper {
         sleep(2_500);
         takeScreenShot(AppSupported.EDJING_FREE,"TrackLoaded" + getCurrentDateString());
         findObjectById("com.edjing.edjingdjturntable:id/platine_menu_bottom_play_button_deckA").click();
-        Log.d(TAG, "loadTrack: TrackIsPlaying");
+        Log.d(TAG, "loadTrackA: TrackIsPlaying");
         takeScreenShot(AppSupported.EDJING_FREE,"TrackIsPlaying" + getCurrentDateString());
     }
 
