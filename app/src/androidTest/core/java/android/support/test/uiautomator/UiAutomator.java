@@ -5,7 +5,6 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
-import com.mercandalli.android.apps.test.app.AppSupported;
 import android.os.Environment;
 import android.os.RemoteException;
 import android.os.SystemClock;
@@ -16,6 +15,7 @@ import android.support.test.espresso.core.deps.guava.collect.Iterables;
 import android.support.test.runner.lifecycle.ActivityLifecycleMonitorRegistry;
 import android.support.test.runner.lifecycle.Stage;
 
+import com.mercandalli.android.apps.test.app.AppSupported;
 import com.mercandalli.android.apps.test.generic.GenericConfig;
 import com.squareup.spoon.Spoon;
 
@@ -27,7 +27,6 @@ import java.util.Date;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.matcher.ViewMatchers.assertThat;
-import static android.support.test.uiautomator.UiAutomatorFind.findObjectById;
 import static org.hamcrest.CoreMatchers.instanceOf;
 
 /**
@@ -290,7 +289,11 @@ public class UiAutomator {
         context.startActivity(intent);
 
         // Wait for the app to appear
-        getDevice().wait(Until.hasObject(By.pkg(packageName).depth(0)), 6_000);
+        try {
+            getDevice().wait(Until.hasObject(By.pkg(packageName).depth(0)), 6_000);
+        } catch (NullPointerException e) {
+            sleep(4_000);
+        }
         instrumentation.waitForIdleSync();
     }
 }

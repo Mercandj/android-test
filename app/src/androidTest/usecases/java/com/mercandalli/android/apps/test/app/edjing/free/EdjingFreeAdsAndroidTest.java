@@ -52,6 +52,7 @@ public final class EdjingFreeAdsAndroidTest {
             openAppSetting(AppSupported.EDJING_FREE);
             sleep(200);
             clickContainsText("force stop", "Forcer l'arrêt", "stop", "arrêt");
+            sleep(600);
             click("android:id/button1");
 
             // Clear data.
