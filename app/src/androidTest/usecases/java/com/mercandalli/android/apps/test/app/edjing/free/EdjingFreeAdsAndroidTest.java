@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.uiautomator.UiAutomator.getDevice;
 import static android.support.test.uiautomator.UiAutomator.openApp;
+import static android.support.test.uiautomator.UiAutomator.pressBack;
 import static android.support.test.uiautomator.UiAutomator.sleep;
 import static android.support.test.uiautomator.UiAutomatorClick.click;
 import static android.support.test.uiautomator.UiAutomatorClick.clickContainsText;
@@ -60,6 +61,7 @@ public final class EdjingFreeAdsAndroidTest {
                 clickContainsText("Clear data");
                 click("android:id/button1");
             }
+            pressBack();
         }
     }
 }
